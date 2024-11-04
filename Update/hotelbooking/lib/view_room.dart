@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/BookingForm.dart';
 import 'package:hotelbooking/model/hotel.dart';
 import 'package:hotelbooking/model/room.dart';
 import 'package:hotelbooking/service/room_service.dart';
@@ -109,14 +110,31 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
                                           'Availability: ${room.availability ? "Available" : "Not available"}',
                                     ),
                                     SizedBox(height: 8),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        // Placeholder for booking action
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Booking room: ${room.roomType}')),
-                                        );
-                                      },
-                                      child: Text("Book Now"),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Navigate to AllHotelViewPage with the selected location
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => BookingForm()),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.amber,
+                                          padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'View Hotel',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

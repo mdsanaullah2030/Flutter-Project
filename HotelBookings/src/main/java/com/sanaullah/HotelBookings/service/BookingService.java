@@ -62,15 +62,15 @@ public class BookingService {
 
         java.sql.Date checkindate = booking.getCheckindate();
         java.sql.Date checkoutdate = booking.getCheckoutdate();
-//
-//    // Calculate the difference in milliseconds
-//        long diffInMillies = checkoutdate.getTime() - checkindate.getTime();
-//
-//    // Convert milliseconds to days
-//        int dayCount = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//        float totalPrice=room.getPrice()*dayCount;
-//
-//        booking.setTotalprice(totalPrice);
+
+    // Calculate the difference in milliseconds
+        long diffInMillies = checkoutdate.getTime() - checkindate.getTime();
+
+    // Convert milliseconds to days
+        int dayCount = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        float totalPrice=room.getPrice()*dayCount;
+
+        booking.setTotalprice(totalPrice);
 
         User user=userRepository.findByEmail(booking.getUser().getEmail())
                 .orElseThrow(()-> new RuntimeException("User With this Id not Found"));
@@ -112,12 +112,5 @@ public class BookingService {
         // Save the updated booking (not the room)
         bookingRepository.save(existingBooking);
     }
-
-
-
-
-
-
-
 
 }

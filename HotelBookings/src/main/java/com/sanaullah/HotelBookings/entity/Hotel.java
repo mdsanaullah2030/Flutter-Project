@@ -16,8 +16,8 @@ public class Hotel {
     private  String name;
     private  String address;
     private  String rating;
-    private  float minPrice;
-    private  float maxPrice;
+    private  double minPrice;
+    private  double maxPrice;
     private  String image;
 
 

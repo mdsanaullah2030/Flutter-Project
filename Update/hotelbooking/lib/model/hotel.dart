@@ -7,8 +7,8 @@ class Hotel {
   String? name;
   String? address;
   String? rating; // Keep rating as String to match your JSON
-  int? minPrice;
-  int? maxPrice;
+  double? minPrice;
+  double? maxPrice;
   String? image;
   Location? location;
   bool isFavorite = false; // Initialize isFavorite, if needed

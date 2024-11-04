@@ -6,6 +6,7 @@ import com.sanaullah.HotelBookings.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ public class HotelRestController {
 
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
     public ResponseEntity<String> saveHotel(
             @RequestPart(value = "hotel") Hotel hotel,
             @RequestParam(value = "image", required = true)MultipartFile file

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/AddHotelPage.dart';
 import 'package:hotelbooking/HomeBody.dart';
 import 'package:hotelbooking/all_hotel_view_page.dart';
 import 'package:hotelbooking/digain.dart';

@@ -17,4 +17,23 @@ class BookingService {
       throw Exception('Failed to load bookings');
     }
   }
+
+  Future<bool> confirmBooking(Booking booking) async {
+    final response = await http.post(
+      Uri.parse('${apiUrl}save'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(booking.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print("Booking confirmed successfully!");
+      return true;
+    } else {
+      throw Exception('Failed to confirm booking');
+    }
+  }
+
+
+
+
 }
