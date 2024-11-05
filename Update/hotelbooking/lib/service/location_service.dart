@@ -1,15 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:hotelbooking/model/lcation.dart';
+import 'package:http/http.dart' as http;
+
 
 class LocationService {
   final String apiUrl = 'http://localhost:8080/api/location/';
-
-
-  String _checkinDate = '';
-  String _checkoutDate = '';
-
-
 
   Future<List<Location>> fetchLocation() async {
     final response = await http.get(Uri.parse(apiUrl));
@@ -21,7 +16,6 @@ class LocationService {
     }
   }
 
-  // New method to create a location
   Future<void> createLocation(Location location) async {
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -33,23 +27,20 @@ class LocationService {
     }
   }
 
+  // Method to update a location
+  Future<void> updateLocation(Location location) async {
+    if (location.id == null) {
+      throw Exception('Location ID is required for update');
+    }
 
+    final response = await http.put(
+      Uri.parse('$apiUrl${location.id}'), // Use the location ID in the URL
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(location.toJson()),
+    );
 
-  // Setter for check-in date
-  void setCheckinDate(String date) {
-    _checkinDate = date;
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update location');
+    }
   }
-
-  // Setter for check-out date
-  void setCheckoutDate(String date) {
-    _checkoutDate = date;
-  }
-
-  // Getter for check-in date
-  String get checkinDate => _checkinDate;
-
-  // Getter for check-out date
-  String get checkoutDate => _checkoutDate;
 }
-
-

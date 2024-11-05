@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/AddHotelPage.dart';
+import 'package:hotelbooking/LocationUpdate.dart';
 import 'package:hotelbooking/loginpage.dart';
 
 
@@ -68,6 +69,8 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
+
+
 
 
             ElevatedButton.icon(
