@@ -91,6 +91,7 @@ class _LocationViewState extends State<LocationView> {
                 fillColor: Colors.amber,
                 hintText: checkInDate != null
                     ? dateFormat.format(checkInDate!)
+
                     : "Select Check-in Date",
                 suffixIcon: Icon(Icons.calendar_today),
                 border: OutlineInputBorder(

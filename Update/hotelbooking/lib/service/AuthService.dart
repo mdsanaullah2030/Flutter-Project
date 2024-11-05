@@ -1,10 +1,10 @@
-
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-class AuthService{
+class AuthService {
+
   final String baseUrl = 'http://localhost:8080';
 
 
@@ -36,9 +36,6 @@ class AuthService{
     }
   }
 
-  //Register Mathord//
-
-
 
   Future<bool> register(Map<String, dynamic> user) async {
     final url = Uri.parse('$baseUrl/register');
@@ -60,7 +57,6 @@ class AuthService{
       return false;
     }
   }
-
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -114,5 +110,6 @@ class AuthService{
   Future<bool> isUser() async {
     return await hasRole(['USER']);
   }
+
 
 }

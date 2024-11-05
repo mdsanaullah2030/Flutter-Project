@@ -12,14 +12,14 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
 
-    @Query("SELECT b FROM Booking b WHERE  b.room.hotel.id = :hotelId   AND  b.room.id = :roomId AND " +
-            "(b.checkindate < :checkoutdate AND b.checkoutdate > :checkindate)")
-    List<Booking> findConflictingBookings(
-            @Param("hotelId") int hotelId,
-            @Param("roomId") int roomId,
-            @Param("checkindate") Date checkindate,
-            @Param("checkoutdate") Date checkoutdate
-    );
+//    @Query("SELECT b FROM Booking b WHERE  b.room.hotel.id = :hotelId   AND  b.room.id = :roomId AND " +
+//            "(b.checkindate < :checkoutdate AND b.checkoutdate > :checkindate)")
+//    List<Booking> findConflictingBookings(
+//            @Param("hotelId") int hotelId,
+//            @Param("roomId") int roomId,
+//            @Param("checkindate") Date checkindate,
+//            @Param("checkoutdate") Date checkoutdate
+//    );
 
 
 

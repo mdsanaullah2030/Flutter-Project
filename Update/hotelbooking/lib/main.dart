@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/AddHotelPage.dart';
-import 'package:hotelbooking/HomeBody.dart';
 import 'package:hotelbooking/all_hotel_view_page.dart';
-import 'package:hotelbooking/digain.dart';
 import 'package:hotelbooking/home.dart';
-import 'package:hotelbooking/hotellist.dart';
-import 'package:hotelbooking/inout.dart';
-import 'package:hotelbooking/location.dart';
 import 'package:hotelbooking/location_view.dart';
 import 'package:hotelbooking/registrationpage.dart';
 import 'package:hotelbooking/view_booking.dart';
@@ -29,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
 
-      home:LocationView(
+      home:RegistrationPage(
 
       ),
     );

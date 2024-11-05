@@ -1,12 +1,13 @@
+
 import 'package:flutter/material.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hotelbooking/AdminPage.dart';
 import 'package:hotelbooking/HotelProfilePage.dart';
 import 'package:hotelbooking/all_hotel_view_page.dart';
+import 'package:hotelbooking/location_view.dart';
 import 'package:hotelbooking/registrationpage.dart';
 import 'package:hotelbooking/service/AuthService.dart';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 
@@ -38,7 +39,7 @@ class LoginPage extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => HotelProfilePage(
               hotelName: 'Grand Plaza',               // Example hotel name
-              hotelImageUrl: 'http://localhost:8080/images/hotel/Hotel Sarina Dhaka_7bcf8c73-6309-478d-8395-3f0e91b10ec8',  // Example image URL
+              hotelImageUrl:'http://localhost:8080/images/hotel/Hotel Sarina Dhaka_7bcf8c73-6309-478d-8395-3f0e91b10ec8',  // Example image URL
               address: '123 Main St, Cityville',      // Example address
               rating: '4.5',                          // Example rating
               minPrice: 100,                          // Example minimum price
@@ -47,10 +48,10 @@ class LoginPage extends StatelessWidget {
           ),
         );
       } else if (role == 'USER') {
-        // Navigator.pushReplacement(
-        //   context,
-        //   // MaterialPageRoute(builder: (context) => AllHotelViewPage(location: loginpage)),
-        // );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LocationView()),
+        );
       } else {
         print('Unknown role: $role');
       }

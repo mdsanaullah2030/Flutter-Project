@@ -11,39 +11,36 @@ class _BookingFormState extends State<BookingForm> {
   final _formKey = GlobalKey<FormState>();
   DateTime? checkInDate;
   DateTime? checkOutDate;
-  int totalPrice = 0; // You might calculate this based on selected room
-  String roomType = '';
-  String hotelName = '';
-  String userName = '';
-  String userEmail = '';
-
+  int totalPrice = 0;
+  int roomPrice = 100; // Example room price, replace with dynamic fetching if needed
   final BookingService bookingService = BookingService();
+
+  void calculateTotalPrice() {
+    if (checkInDate != null && checkOutDate != null) {
+      int dayCount = checkOutDate!.difference(checkInDate!).inDays;
+      setState(() {
+        totalPrice = dayCount * roomPrice;
+      });
+    }
+  }
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-
+      // Create a new booking instance
       Booking booking = Booking(
-        checkindate: checkInDate!,
-        checkoutdate: checkOutDate!,
+        checkindate: checkInDate,
+        checkoutdate: checkOutDate,
         totalprice: totalPrice,
-        roomType: roomType,
-        hotelName: hotelName,
-        userName: userName,
-        userEmail: userEmail,
       );
 
       try {
         bool success = await bookingService.confirmBooking(booking);
         if (success) {
-          // Show a success message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Booking confirmed successfully!')),
           );
-          // Optionally, navigate to another page or reset the form
         }
       } catch (e) {
-        // Handle error, show message to user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to confirm booking: $e')),
         );
@@ -61,38 +58,39 @@ class _BookingFormState extends State<BookingForm> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'User Name'),
-                onSaved: (value) {
-                  userName = value!;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'User Email'),
-                onSaved: (value) {
-                  userEmail = value!;
-                },
-                validator: (value) {
-                  if (value!.isEmpty || !RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
-              // You might want to use a DatePicker for check-in and check-out dates
               ElevatedButton(
                 onPressed: () async {
-                  // Show Date Picker for check-in and check-out dates
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(Duration(days: 365)),
+                  );
+                  if (picked != null) {
+                    setState(() => checkInDate = picked);
+                    calculateTotalPrice();
+                  }
                 },
-                child: Text('Select Dates'),
+                child: Text('Select Check-In Date'),
               ),
-              // Add fields for room type, hotel name, and total price as needed
+              ElevatedButton(
+                onPressed: () async {
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: checkInDate != null
+                        ? checkInDate!.add(Duration(days: 1))
+                        : DateTime.now().add(Duration(days: 1)),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(Duration(days: 365)),
+                  );
+                  if (picked != null) {
+                    setState(() => checkOutDate = picked);
+                    calculateTotalPrice();
+                  }
+                },
+                child: Text('Select Check-Out Date'),
+              ),
+              Text('Total Price: \$${totalPrice}'),
               ElevatedButton(
                 onPressed: _submitForm,
                 child: Text('Confirm Booking'),
