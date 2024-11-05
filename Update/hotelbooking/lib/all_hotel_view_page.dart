@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hotelbooking/AddHotelPage.dart';
 import 'package:hotelbooking/model/hotel.dart';
 import 'package:hotelbooking/model/lcation.dart';
 import 'package:hotelbooking/service/hotel_service.dart';
@@ -151,6 +152,29 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                       });
                                     },
                                   ),
+
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddHotelPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min, // Keeps the button compact
+                                      children: const [
+                                        Icon(Icons.add_home_work), // Replace with your preferred icon
+                                        SizedBox(width: 8), // Space between icon and text
+                                        Text('Add Hotel'),
+                                      ],
+                                    ),
+                                  ),
+
+
+
+
                                   ElevatedButton(
                                     onPressed: () {
                                       Navigator.push(
