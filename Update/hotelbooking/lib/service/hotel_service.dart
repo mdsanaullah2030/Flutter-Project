@@ -48,6 +48,32 @@ class HotelService {
   }
 
 
+////
+
+
+  Future<List<Location>> fetchAllLocations() async {
+    final String url = 'http://localhost:8080/api/location/'; // Adjust to your endpoint
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((location) => Location.fromJson(location)).toList();
+    } else {
+      throw Exception('Failed to load locations');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   final Dio _dio = Dio();
 
   final AuthService authService = AuthService();
