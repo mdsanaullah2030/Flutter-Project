@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 class HotelService {
 
-
+//Location Show//
   Future<Location> fetchHotelById(int locationId) async {
     final String url = 'http://localhost:8080/api/location/$locationId';
     final response = await http.get(Uri.parse(url));
@@ -20,6 +20,10 @@ class HotelService {
     }
   }
 
+
+
+
+  //Lcation wase Hotel Show//
 
   Future<List<Hotel>> fetchRoomsByHotelId(int locationId) async {
     final String url = 'http://localhost:8080/api/hotel/getHotelsByLocationId?locationId=$locationId';
@@ -48,7 +52,8 @@ class HotelService {
   }
 
 
-////
+
+//Dropdown All Location Show//
 
 
   Future<List<Location>> fetchAllLocations() async {
@@ -68,15 +73,8 @@ class HotelService {
 
 
 
+//Hotel Show//
 
-
-
-
-
-
-  final Dio _dio = Dio();
-
-  final AuthService authService = AuthService();
 
   final String apiUrl =
       'http://localhost:8080/api/hotel/'; // Adjust to match your backend URL
@@ -95,6 +93,14 @@ class HotelService {
       throw Exception('Failed to load hotels');
     }
   }
+
+
+//Data Save Dio worck data data input //
+
+
+  final Dio _dio = Dio();
+
+  final AuthService authService = AuthService();
 
 
 

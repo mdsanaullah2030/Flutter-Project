@@ -4,7 +4,7 @@ class Location {
   String? name;
   String? image;
 
-  Location({this.id, this.name, this.image});
+  Location({this.id, this.name, this.image, String? imageUrl});
 
   Location.fromJson(Map<String, dynamic> json) {
     id = json['id'];
