@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
 import 'package:hotelbooking/location/AddLocation.dart';
-import 'package:hotelbooking/location/LocationUpdate.dart';
+import 'package:hotelbooking/location/UpdateLocation.dart';
+import 'package:hotelbooking/location/location_view.dart';
+
 import 'package:hotelbooking/loginpage.dart';
 
 
@@ -57,6 +59,27 @@ class AdminPage extends StatelessWidget {
 
             ElevatedButton.icon(
               icon: Icon(Icons.add),
+              label: Text('Update Locatn'),
+              onPressed: () {
+                // Implement logout functionality or navigate back to login
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) =>LocationView()),
+                ); // Example logout: navigate back to login
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+            ),
+            SizedBox(height: 10),
+
+
+
+
+
+
+            ElevatedButton.icon(
+              icon: Icon(Icons.add),
               label: Text('Add Hotel'),
               onPressed: () {
                 // Implement logout functionality or navigate back to login
@@ -70,6 +93,11 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
+
+
+
+
+
 
             ElevatedButton.icon(
               icon: Icon(Icons.location_city),

@@ -20,6 +20,9 @@ class LocationService {
 
 
 
+
+
+
   // Method to update a location
   Future<void> updateLocation(Location location) async {
     if (location.id == null) {
@@ -36,6 +39,9 @@ class LocationService {
       throw Exception('Failed to update location');
     }
   }
+
+
+
 
 
 
@@ -82,5 +88,41 @@ class LocationService {
       return null;
     }
   }
+
+
+
+
+
+
+  String _checkinDate = '';
+  String _checkoutDate = '';
+
+  // Setters for check-in and check-out dates
+  void setCheckinDate(String date) {
+    _checkinDate = date;
+  }
+
+  void setCheckoutDate(String date) {
+    _checkoutDate = date;
+  }
+
+  // Getters for check-in and check-out dates
+  String getCheckinDate() {
+    return _checkinDate;
+  }
+
+  String getCheckoutDate() {
+    return _checkoutDate;
+  }
+
+
+
+
+
+
+
+
+
+
 
 }
