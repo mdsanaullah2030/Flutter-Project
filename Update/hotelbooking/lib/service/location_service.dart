@@ -46,10 +46,11 @@ class LocationService {
   final AuthService authService = AuthService();
 
 
-  Future<Location?> createHotel(Location hotel, XFile? image) async {
+
+  Future<Location?> createLocation(Location location, XFile? image) async {
     final formData = FormData();
 
-    formData.fields.add(MapEntry('hotel', jsonEncode(hotel.toJson())));
+    formData.fields.add(MapEntry('location', jsonEncode(location.toJson())));
 
     if (image != null) {
       final bytes = await image.readAsBytes();

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hotelbooking/AdminPage.dart';
 import 'package:hotelbooking/HotelProfilePage.dart';
-import 'package:hotelbooking/all_hotel_view_page.dart';
-import 'package:hotelbooking/location_view.dart';
+import 'package:hotelbooking/hotel/all_hotel_view_page.dart';
+import 'package:hotelbooking/location/location_view.dart';
 import 'package:hotelbooking/registrationpage.dart';
 import 'package:hotelbooking/service/AuthService.dart';
 
@@ -61,39 +61,6 @@ class LoginPage extends StatelessWidget {
   }
 
 
-  // Future<void> loginUser(BuildContext context) async {
-  //   final url = Uri.parse('http://localhost:8080/login');
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: jsonEncode({'email': email.text, 'password': password.text}),
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     final responseData = jsonDecode(response.body);
-  //     final token = responseData['token'];
-  //
-  //     // Decode JWT to get 'sub' and 'role'
-  //     Map<String, dynamic> payload = Jwt.parseJwt(token);
-  //     String sub = payload['sub'];
-  //     String role = payload['role'];
-  //
-  //     // Store token, sub, and role securely
-  //     await storage.write(key: 'token', value: token);
-  //     await storage.write(key: 'sub', value: sub);
-  //     await storage.write(key: 'role', value: role);
-  //
-  //     print('Login successful. Sub: $sub, Role: $role');
-  //
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => AllHotelViewPage()),
-  //     );
-  //
-  //   } else {
-  //     print('Login failed with status: ${response.statusCode}');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

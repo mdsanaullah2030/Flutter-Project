@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/AddHotelPage.dart';
-import 'package:hotelbooking/AddLocation.dart';
-import 'package:hotelbooking/LocationUpdate.dart';
+import 'package:hotelbooking/hotel/AddHotelPage.dart';
+import 'package:hotelbooking/location/AddLocation.dart';
+import 'package:hotelbooking/location/LocationUpdate.dart';
 import 'package:hotelbooking/loginpage.dart';
 
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/all_hotel_view_page.dart';
+import 'package:hotelbooking/hotel/all_hotel_view_page.dart';
 import 'package:hotelbooking/model/lcation.dart';
 import 'package:hotelbooking/service/location_service.dart';
 import 'package:intl/intl.dart';
@@ -133,7 +133,7 @@ class _LocationViewState extends State<LocationView> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -174,8 +174,8 @@ class _LocationViewState extends State<LocationView> {
                                 leading: location.image != null
                                     ? Image.network(
                                   "http://localhost:8080/images/location/${location.image}",
-                                  width: 50,
-                                  height: 50,
+                                  height: 150,
+                                  fit: BoxFit.cover,
                                 )
                                     : Icon(Icons.location_on),
                                 title: Text(location.name ?? 'Unnamed Location'),
