@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hotelbooking/AdminPage.dart';
-import 'package:hotelbooking/HotelProfilePage.dart';
+import 'package:hotelbooking/page/AdminPage.dart';
+import 'package:hotelbooking/page/HotelProfilePage.dart';
 import 'package:hotelbooking/hotel/all_hotel_view_page.dart';
 import 'package:hotelbooking/location/location_view.dart';
-import 'package:hotelbooking/registrationpage.dart';
+import 'package:hotelbooking/page/registrationpage.dart';
 import 'package:hotelbooking/service/AuthService.dart';
 
 

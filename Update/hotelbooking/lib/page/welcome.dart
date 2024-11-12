@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/loginpage.dart';
-import 'package:hotelbooking/registrationpage.dart';
+import 'package:hotelbooking/page/loginpage.dart';
+import 'package:hotelbooking/page/registrationpage.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});

@@ -10,9 +10,9 @@ class _HomeState extends State<Home> {
 
   // Sample image URLs
   final List<String> imageUrls = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk3zT-vml_if9_-iQVetLY9Dmnk1Epx2SYCA&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbj9DLTvqnF4h4U5T19ur6W3hSw3EwWvIDRwTAT-X2hqLRVeso5jdCXCPKM4618ctyJtQ&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQMU_XC_jQqIsEtigtZgzp0cLcvsZex2Ig5A&s',
+    'https://cdn-icons-png.freepik.com/256/13026/13026672.png?ga=GA1.1.897004978.1724843830&semt=ais_hybrid',
+    'https://cdn-icons-png.freepik.com/256/2250/2250142.png?ga=GA1.1.897004978.1724843830&semt=ais_hybrid',
+    'https://cdn-icons-png.freepik.com/256/15532/15532851.png?ga=GA1.1.897004978.1724843830&semt=ais_hybrid',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjuT0CU-25imSzGacX-954Q7fptJGnNjx0kQ&s',
     'https://cdn.hugeicons.com/icons/shopping-cart-check-in-01-duotone-rounded.svg',
     'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         backgroundColor: Colors.indigo,
       ),
+      backgroundColor: Colors.blueGrey[50],
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
@@ -53,13 +54,13 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                      child: Image.network(
-                        imageUrls[index],
-                        fit: BoxFit.cover,
-                      ),
+                  // Set a fixed height for the image to control its size
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.network(
+                      imageUrls[index],
+                      height: 100, // Set a fixed height for the image
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Padding(
@@ -85,7 +86,6 @@ class _HomeState extends State<Home> {
           setState(() {
             _currentIndex = index;
           });
-          // You can handle navigation to different screens here if needed.
         },
         items: [
           BottomNavigationBarItem(

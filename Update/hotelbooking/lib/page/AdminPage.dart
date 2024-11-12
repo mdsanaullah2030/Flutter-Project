@@ -4,7 +4,7 @@ import 'package:hotelbooking/location/AddLocation.dart';
 import 'package:hotelbooking/location/UpdateLocation.dart';
 import 'package:hotelbooking/location/location_view.dart';
 
-import 'package:hotelbooking/loginpage.dart';
+import 'package:hotelbooking/page/loginpage.dart';
 
 
 class AdminPage extends StatelessWidget {

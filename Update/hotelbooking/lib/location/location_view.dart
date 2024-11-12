@@ -5,6 +5,7 @@ import 'package:hotelbooking/location/UpdateLocation.dart';
 import 'package:hotelbooking/model/lcation.dart';
 import 'package:hotelbooking/service/location_service.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationView extends StatefulWidget {
   const LocationView({super.key});
@@ -27,6 +28,11 @@ class _LocationViewState extends State<LocationView> {
 
   String searchQuery = ''; // To store the current search query
 
+
+
+
+
+
   Future<void> _selectDate(BuildContext context, bool isCheckIn) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -38,12 +44,37 @@ class _LocationViewState extends State<LocationView> {
       setState(() {
         if (isCheckIn) {
           checkInDate = picked;
+          _saveDateToStorage('checkInDate', picked);
         } else {
           checkOutDate = picked;
+          _saveDateToStorage('checkOutDate', picked);
         }
       });
     }
   }
+
+  Future<void> _saveDateToStorage(String key, DateTime date) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, date.toIso8601String());
+  }
+
+  // Future<void> _selectDate(BuildContext context, bool isCheckIn) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime.now().add(Duration(days: 365)),
+  //   );
+  //   if (picked != null) {
+  //     setState(() {
+  //       if (isCheckIn) {
+  //         checkInDate = picked;
+  //       } else {
+  //         checkOutDate = picked;
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -54,6 +85,9 @@ class _LocationViewState extends State<LocationView> {
       return locations;
     });
   }
+
+//Saerche//
+
 
   void _filterLocations(String query) {
     setState(() {
