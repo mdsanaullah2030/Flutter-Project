@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/model/lcation.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 
 import 'package:hotelbooking/service/location_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -136,7 +136,7 @@ class _UpdateLocationPageState extends State<UpdateLocationPage> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     Location updatedLocation = widget.location;
-                    updatedLocation.name = _nameController.text;
+                    // updatedLocation.name = _nameController.text;
 
                     try {
                       await updateLocation(updatedLocation, _selectedImage);

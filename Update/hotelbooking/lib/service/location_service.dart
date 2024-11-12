@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:hotelbooking/model/lcation.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:hotelbooking/service/AuthService.dart';
@@ -17,6 +17,32 @@ class LocationService {
       throw Exception('Failed to load locations');
     }
   }
+
+
+
+
+
+
+//All Location get kora//
+
+
+  Future<List<Location>> getAllLocations() async {
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        List<dynamic> body = json.decode(response.body);
+        return body.map((dynamic item) => Location.fromJson(item)).toList();
+      } else {
+        throw Exception('Failed to load locations');
+      }
+    } catch (e) {
+      print('Error fetching locations: $e');
+      throw Exception('Error fetching locations; please try again later.');
+    }
+  }
+
+
 
 
 
@@ -88,6 +114,12 @@ class LocationService {
       return null;
     }
   }
+
+
+
+
+
+
 
 
 

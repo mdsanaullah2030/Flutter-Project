@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
 import 'package:hotelbooking/model/hotel.dart';
-import 'package:hotelbooking/model/lcation.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 import 'package:hotelbooking/service/hotel_service.dart';
 import 'package:hotelbooking/room/view_room.dart';
 

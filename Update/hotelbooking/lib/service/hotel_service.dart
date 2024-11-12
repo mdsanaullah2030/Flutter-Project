@@ -1,5 +1,5 @@
 import 'package:hotelbooking/model/hotel.dart';
-import 'package:hotelbooking/model/lcation.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 import 'package:hotelbooking/service/AuthService.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -139,5 +139,28 @@ class HotelService {
       return null;
     }
   }
+
+
+
+//All Hotel get kora//
+
+
+  Future<List<Hotel>> getAllHotel() async {
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        List<dynamic> body = json.decode(response.body);
+        return body.map((dynamic item) => Hotel.fromJson(item)).toList();
+      } else {
+        throw Exception('Failed to load locations');
+      }
+    } catch (e) {
+      print('Error fetching locations: $e');
+      throw Exception('Error fetching locations; please try again later.');
+    }
+  }
+
+
 
 }

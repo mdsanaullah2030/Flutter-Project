@@ -5,6 +5,7 @@ import 'package:hotelbooking/location/UpdateLocation.dart';
 import 'package:hotelbooking/location/location_view.dart';
 
 import 'package:hotelbooking/page/loginpage.dart';
+import 'package:hotelbooking/room/addRoom.dart';
 
 
 class AdminPage extends StatelessWidget {
@@ -59,7 +60,7 @@ class AdminPage extends StatelessWidget {
 
             ElevatedButton.icon(
               icon: Icon(Icons.add),
-              label: Text('Update Locatn'),
+              label: Text('Location View'),
               onPressed: () {
                 // Implement logout functionality or navigate back to login
                 Navigator.pushReplacement(
@@ -101,7 +102,7 @@ class AdminPage extends StatelessWidget {
 
             ElevatedButton.icon(
               icon: Icon(Icons.location_city),
-              label: Text('Add Hotel'),
+              label: Text('Add Location'),
               onPressed: () {
                 // Implement logout functionality or navigate back to login
                 Navigator.pushReplacement(
@@ -114,6 +115,26 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
+
+
+
+
+            ElevatedButton.icon(
+              icon: Icon(Icons.location_city),
+              label: Text('Add Room'),
+              onPressed: () {
+                // Implement logout functionality or navigate back to login
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) =>AddRoomPage()),
+                ); // Example logout: navigate back to login
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+            ),
+            SizedBox(height: 10),
+
 
 
             ElevatedButton.icon(

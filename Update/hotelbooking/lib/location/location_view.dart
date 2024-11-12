@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/hotel/all_hotel_view_page.dart';
+import 'package:hotelbooking/hotel/AllHotelViewPage.dart';
 import 'package:hotelbooking/location/UpdateLocation.dart';
-import 'package:hotelbooking/model/lcation.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 import 'package:hotelbooking/service/location_service.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';

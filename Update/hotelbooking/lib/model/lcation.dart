@@ -1,24 +1,30 @@
 
 class Location {
-  int? id;
-  String? name;
-  String? image;
+  final int id;
+  final String name;
+  final String image;
 
-  Location({this.id, this.name, this.image, String? imageUrl});
+  Location({
+    required this.id,
+    required this.name,
+    required this.image,
+  });
 
-  Location.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    image = json['image'];
+  // Factory constructor for creating a Location instance from JSON
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+    );
   }
 
-
-
+  // Method for converting a Location instance to JSON
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    return data;
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+    };
   }
 }
