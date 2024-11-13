@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';

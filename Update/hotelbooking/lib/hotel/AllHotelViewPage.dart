@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
+import 'package:hotelbooking/hotel/UpdateHotelPage.dart';
 import 'package:hotelbooking/model/hotel.dart';
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 import 'package:hotelbooking/service/hotel_service.dart';
 import 'package:hotelbooking/room/view_room.dart';
 
@@ -192,6 +193,39 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                       ],
                                     ),
                                   ),
+
+
+
+
+
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => UpdateHotelPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: const [
+                                        Icon(Icons.add_home_work),
+                                        SizedBox(width: 8),
+                                        Text('update Hotel'),
+                                      ],
+                                    ),
+                                  ),
+
+
+
+
+
+
+
+
+
+
                                   // View Room button
                                   ElevatedButton(
                                     onPressed: () {

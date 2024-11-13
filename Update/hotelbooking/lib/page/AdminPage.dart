@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
+import 'package:hotelbooking/hotel/AllHotelViewPage.dart';
 import 'package:hotelbooking/location/AddLocation.dart';
 import 'package:hotelbooking/location/UpdateLocation.dart';
 import 'package:hotelbooking/location/location_view.dart';
-
 import 'package:hotelbooking/page/loginpage.dart';
 import 'package:hotelbooking/room/addRoom.dart';
 
@@ -136,6 +136,25 @@ class AdminPage extends StatelessWidget {
             SizedBox(height: 10),
 
 
+            //
+            // ElevatedButton.icon(
+            //   icon: Icon(Icons.location_city),
+            //   label: Text('Add Room'),
+            //   onPressed: () {
+            //     // Implement logout functionality or navigate back to login
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(builder: (context) =>AllHotelViewPage(),
+            //     ); // Example logout: navigate back to login
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.blueAccent,
+            //   ),
+            // ),
+            //
+
+
+            SizedBox(height: 10),
 
             ElevatedButton.icon(
               icon: Icon(Icons.settings),

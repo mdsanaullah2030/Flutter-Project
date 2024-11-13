@@ -1,5 +1,5 @@
 import 'package:hotelbooking/model/hotel.dart';
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 import 'package:hotelbooking/service/AuthService.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:hotelbooking/service/AuthService.dart';

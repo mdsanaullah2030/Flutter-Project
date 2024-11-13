@@ -1,6 +1,6 @@
 
 
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 
 class Hotel {
   int? id;

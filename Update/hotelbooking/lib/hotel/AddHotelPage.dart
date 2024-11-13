@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/hotel/AllHotelViewPage.dart';
 import 'package:hotelbooking/model/hotel.dart';
-import 'package:hotelbooking/model/Lcation.dart';
+import 'package:hotelbooking/model/Location.dart';
 import 'package:hotelbooking/service/hotel_service.dart';
 import 'package:hotelbooking/service/location_service.dart';
 import 'package:http_parser/http_parser.dart';

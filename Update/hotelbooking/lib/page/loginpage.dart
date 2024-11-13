@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
       if (role == 'ADMIN') {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AdminPage()),
+          MaterialPageRoute(builder: (context) => LocationView()),
         );
       } else if (role == 'HOTEL') {
         Navigator.push(
