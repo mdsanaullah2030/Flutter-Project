@@ -163,4 +163,23 @@ class HotelService {
 
 
 
+
+
+  // Method to update a location
+  Future<void> updateHotel(Hotel hotel) async {
+    if (hotel.id == null) {
+      throw Exception('Location ID is required for update');
+    }
+
+    final response = await http.put(
+      Uri.parse('$apiUrl${hotel.id}'), // Use the location ID in the URL
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(hotel.toJson()),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update location');
+    }
+  }
+
 }

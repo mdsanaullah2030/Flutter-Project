@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/model/Lcation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +45,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
     }
   }
 
-  Future<void> _saveHotel() async {
+  Future<void> _saveLocation() async {
     if (_formKey.currentState!.validate() && (selectedImage != null || webImage != null)) {
       final hotel = {
         'name': _nameController.text,
@@ -53,13 +54,16 @@ class _AddLocationPageState extends State<AddLocationPage> {
       var uri = Uri.parse('http://localhost:8080/api/location/save');
       var request = http.MultipartRequest('POST', uri);
 
+      final location = Location(id: 0, name: _nameController.text, image: ''); // Replace with your actual image path if needed
+
       request.files.add(
         http.MultipartFile.fromString(
-          'hotel',
-          jsonEncode(hotel),
+          'location',
+          jsonEncode(location.toJson()),
           contentType: MediaType('application', 'json'),
         ),
       );
+
 
       if (kIsWeb && webImage != null) {
         request.files.add(http.MultipartFile.fromBytes(
@@ -79,16 +83,16 @@ class _AddLocationPageState extends State<AddLocationPage> {
         var response = await request.send();
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Hotel added successfully!')),
+            SnackBar(content: Text('Location added successfully!')),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to add hotel. Status code: ${response.statusCode}')),
+            SnackBar(content: Text('Failed to add Location. Status code: ${response.statusCode}')),
           );
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error occurred while adding hotel.')),
+          SnackBar(content: Text('Error occurred while adding Location.')),
         );
       }
     } else {
@@ -101,7 +105,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add New Hotel')),
+      appBar: AppBar(title: Text('Add New Location')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -111,9 +115,9 @@ class _AddLocationPageState extends State<AddLocationPage> {
               // Hotel Name Field
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Hotel Name'),
+                decoration: InputDecoration(labelText: 'Location Name'),
                 validator: (value) =>
-                value == null || value.isEmpty ? 'Enter hotel name' : null,
+                value == null || value.isEmpty ? 'Enter Location name' : null,
               ),
               SizedBox(height: 16),
               // Image Upload Button
@@ -146,8 +150,8 @@ class _AddLocationPageState extends State<AddLocationPage> {
               SizedBox(height: 16),
               // Save Button
               ElevatedButton(
-                onPressed: _saveHotel,
-                child: Text('Save Hotel'),
+                onPressed: _saveLocation,
+                child: Text('Save Location'),
               ),
             ],
           ),

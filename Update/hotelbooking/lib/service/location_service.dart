@@ -23,7 +23,7 @@ class LocationService {
 
 
 
-//All Location get kora//
+//All Location get kora Hotel show kora jono//
 
 
   Future<List<Location>> getAllLocations() async {

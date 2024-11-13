@@ -1,156 +1,172 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/model/Lcation.dart';
 
-import 'package:hotelbooking/service/location_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:typed_data';
-import 'dart:convert';
-import 'package:hotelbooking/service/AuthService.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker_web/image_picker_web.dart';
 
 class UpdateLocationPage extends StatefulWidget {
-  final Location location;
+  final Location? location; // Optional location to edit
 
-  UpdateLocationPage({required this.location});
+  const UpdateLocationPage({super.key, this.location});
 
   @override
-  _UpdateLocationPageState createState() => _UpdateLocationPageState();
+  State<UpdateLocationPage> createState() => _UpdateLocationPageState();
 }
 
 class _UpdateLocationPageState extends State<UpdateLocationPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  XFile? _selectedImage;
-  final LocationService _locationService = LocationService();
-  final Dio _dio = Dio(); // Initialize Dio instance
+
+  // Image selection variables
+  XFile? selectedImage;
+  Uint8List? webImage;
+  final ImagePicker _picker = ImagePicker();
+
+  // Controller for the location name field
+  final TextEditingController _nameController = TextEditingController();
+  bool get isEditMode => widget.location != null;
 
   @override
   void initState() {
     super.initState();
-    _nameController.text = widget.location.name ?? '';
-  }
-
-  Future<void> _pickImage() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImage = pickedImage;
-    });
-  }
-
-  Future<void> updateLocation(Location location, XFile? image) async {
-    final formData = FormData();
-
-    // Add location data as a JSON string part
-    formData.fields.add(MapEntry('location', jsonEncode(location.toJson())));
-
-    // Add image file if selected
-    if (image != null) {
-      final bytes = await image.readAsBytes();
-      formData.files.add(MapEntry(
-        'image',
-        MultipartFile.fromBytes(bytes, filename: image.name),
-      ));
+    if (isEditMode) {
+      _nameController.text = widget.location!.name;
     }
+  }
 
-    // Instantiate AuthService and get the token
-    final authService = AuthService(); // Create an instance of AuthService
-    final token = await authService.getToken(); // Use the instance to call getToken()
+  Future<void> pickImage() async {
+    if (kIsWeb) {
+      var pickedImage = await ImagePickerWeb.getImageAsBytes();
+      if (pickedImage != null) {
+        setState(() {
+          webImage = pickedImage; // For Web
+        });
+      }
+    } else {
+      final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        setState(() {
+          selectedImage = pickedImage; // For Mobile
+        });
+      }
+    }
+  }
 
-    final headers = {'Authorization': 'Bearer $token'};
+  Future<void> _saveOrUpdateLocation() async {
+    if (_formKey.currentState!.validate()) {
+      var uri = isEditMode
+          ? Uri.parse('http://localhost:8080/api/location/update/${widget.location!.id}')
+          : Uri.parse('http://localhost:8080/api/location/save');
 
-    try {
-      final response = await _dio.put(
-        'your_api_url_here/location/${location.id}', // Replace with your actual API URL
-        data: formData,
-        options: Options(headers: headers),
+      var request = http.MultipartRequest(isEditMode ? 'PUT' : 'POST', uri);
+
+      final location = Location(
+        id: widget.location?.id ?? 0,
+        name: _nameController.text,
+        image: '',
       );
 
-      if (response.statusCode != 200) {
-        throw Exception('Failed to update location');
+      request.files.add(
+        http.MultipartFile.fromString(
+          'location',
+          jsonEncode(location.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+      );
+
+      // Add the image file if available
+      if (kIsWeb && webImage != null) {
+        request.files.add(http.MultipartFile.fromBytes(
+          'image',
+          webImage!,
+          filename: 'upload.jpg',
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      } else if (selectedImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'image',
+          selectedImage!.path,
+        ));
       }
-    } catch (e) {
-      throw Exception('Error updating location: $e');
+
+      try {
+        var response = await request.send();
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(isEditMode ? 'Location updated successfully!' : 'Location added successfully!')),
+          );
+          Navigator.pop(context, true); // Optionally close the page and return success
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to ${isEditMode ? "update" : "add"} location. Status code: ${response.statusCode}')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error occurred while ${isEditMode ? "updating" : "adding"} location.')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please complete the form and upload an image.')),
+      );
     }
-  }
-
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Update Location'),
-      ),
+      appBar: AppBar(title: Text(isEditMode ? 'Edit Location' : 'Add New Location')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: [
+              // Location Name Field
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(labelText: 'Location Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a location name';
-                  }
-                  return null;
-                },
+                validator: (value) => value == null || value.isEmpty ? 'Enter location name' : null,
               ),
-              SizedBox(height: 16.0),
-              Row(
-                children: [
-                  _selectedImage == null
-                      ? Text('No image selected')
-                      : FutureBuilder<Uint8List>(
-                    future: _selectedImage!.readAsBytes(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done &&
-                          snapshot.hasData) {
-                        return Image.memory(
-                          snapshot.data!,
-                          height: 100,
-                          width: 100,
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error loading image');
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                  TextButton.icon(
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
-                    onPressed: _pickImage,
-                  ),
-                ],
+              SizedBox(height: 16),
+              // Image Upload Button
+              TextButton.icon(
+                icon: Icon(Icons.image),
+                label: Text('Upload Image'),
+                onPressed: pickImage,
               ),
-              SizedBox(height: 16.0),
+              // Display Selected Image Preview
+              if (kIsWeb && webImage != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.memory(
+                    webImage!,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              else if (!kIsWeb && selectedImage != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.file(
+                    File(selectedImage!.path),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              SizedBox(height: 16),
+              // Save or Update Button
               ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    Location updatedLocation = widget.location;
-                    // updatedLocation.name = _nameController.text;
-
-                    try {
-                      await updateLocation(updatedLocation, _selectedImage);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Location updated successfully')),
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error updating location: $e')),
-                      );
-                    }
-                  }
-                },
-                child: Text('Update Location'),
+                onPressed: _saveOrUpdateLocation,
+                child: Text(isEditMode ? 'Update Location' : 'Save Location'),
               ),
             ],
           ),
