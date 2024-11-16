@@ -15,9 +15,7 @@ class _CarouselState extends State<Carousel> {
 
   // List of image URLs
   static const List<String> _images = [
-    'https://images.pexels.com/photos/261101/pexels-photo-261101.jpeg?auto=compress&cs=tinysrgb&w=600',
-    'https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=600',
-    'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600',
+
   ];
 
   // List of text overlays for each image
@@ -111,7 +109,7 @@ class _CarouselState extends State<Carousel> {
                               _texts[index],
                               style: const TextStyle(
                                 fontSize: 16,
-                                color: Colors.amber,
+                                color: Colors.pink,
                                 fontWeight: FontWeight.bold,
                                 shadows: [
                                   Shadow(

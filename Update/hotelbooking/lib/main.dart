@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
-import 'package:hotelbooking/model/CarouselSlider.dart';
+import 'package:hotelbooking/location/addshow.dart';
+import 'package:hotelbooking/page/CarouselSlider.dart';
 import 'package:hotelbooking/hotel/AllHotelViewPage.dart';
 import 'package:hotelbooking/page/home.dart';
 import 'package:hotelbooking/location/location_view.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
 
-      home:RegistrationPage(
+      home:ViewBooking(
 
       ),
     );

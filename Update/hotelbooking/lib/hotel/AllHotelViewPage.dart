@@ -27,12 +27,32 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
     futureLocation = HotelService().fetchHotelById(widget.location.id!);
   }
 
+  
+  
+  
+  //Location data show//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hotels in ${widget.location.name}'),
+        title: Text(
+          'Hotels in ${widget.location.name}',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.lightBlueAccent, Colors.red,Colors.indigo],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
+
       body: Column(
         children: [
           // Fetch and display location details at the top
@@ -64,10 +84,10 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        'No description available',
-                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                      ),
+                      // Text(
+                      //   // 'No description available',
+                      //   style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      // ),
                       SizedBox(height: 8),
                       Divider(),
                     ],
@@ -76,6 +96,13 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
               }
             },
           ),
+          
+          
+          
+          
+          //Hotel data list//
+          
+          
           Expanded(
             child: FutureBuilder<List<Hotel>>(
               future: futureHotels,
@@ -129,6 +156,11 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                 ),
                               ),
                             ),
+
+
+
+                          //RatingBar//
+
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
@@ -151,6 +183,11 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                 },
                               ),
                             ),
+
+
+
+
+                            // Favorite button
                             const SizedBox(height: 10),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -174,6 +211,10 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                       });
                                     },
                                   ),
+
+
+
+
                                   // Add Hotel button
                                   ElevatedButton(
                                     onPressed: () {
@@ -184,43 +225,45 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                         ),
                                       );
                                     },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        Icon(Icons.add_home_work),
-                                        SizedBox(width: 8),
-                                        Text('Add Hotel'),
-                                      ],
-                                    ),
-                                  ),
-
-
-
-
-
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => UpdateHotelPage(),
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                        if (states.contains(MaterialState.hovered)) {
+                                          return Colors.lightBlueAccent.shade700; // Hover color
+                                        }
+                                        return Colors.amber; // Default color
+                                      }),
+                                      overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+                                        if (states.contains(MaterialState.pressed)) {
+                                          return Colors.blueGrey.shade900.withOpacity(0.2); // Ripple effect color
+                                        }
+                                        return null; // Default ripple effect
+                                      }),
+                                      textStyle: MaterialStateProperty.all(
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12), // Rounded corners
                                         ),
-                                      );
-                                    },
+                                      ),
+                                      padding: MaterialStateProperty.all(
+                                        const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                                      ),
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        Icon(Icons.add_home_work),
-                                        SizedBox(width: 8),
-                                        Text('update Hotel'),
+                                      children: [
+                                        const Icon(Icons.add_home_work, color: Colors.white), // Icon color
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Add Hotel',
+                                          style: TextStyle(
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-
-
-
-
-
 
 
 
@@ -232,13 +275,44 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              RoomDetailsPage(hotel: hotel),
+                                          builder: (context) => RoomDetailsPage(hotel: hotel),
                                         ),
                                       );
                                     },
-                                    child: const Text('View Room'),
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                        if (states.contains(MaterialState.hovered)) {
+                                          return Colors.lightBlueAccent.shade700; // Hover color
+                                        }
+                                        return Colors.amber; // Default color
+                                      }),
+                                      overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+                                        if (states.contains(MaterialState.pressed)) {
+                                          return Colors.deepPurple.shade900.withOpacity(0.2); // Ripple effect color
+                                        }
+                                        return null; // Default ripple effect
+                                      }),
+                                      textStyle: MaterialStateProperty.all(
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12), // Rounded corners
+                                        ),
+                                      ),
+                                      padding: MaterialStateProperty.all(
+                                        const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'View Room',
+                                      style: TextStyle(
+                                        color: Colors.white, // Set text color to white
+                                      ),
+                                    ),
                                   ),
+
+
                                 ],
                               ),
                             ),

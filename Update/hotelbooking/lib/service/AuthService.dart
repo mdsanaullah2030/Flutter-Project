@@ -19,6 +19,7 @@ class AuthService {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       String token = data['token'];
+      Map<String, dynamic> user = data['user'];
 
       // Decode token to get role
       Map<String, dynamic> payload = Jwt.parseJwt(token);
@@ -28,6 +29,7 @@ class AuthService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('authToken', token);
       await prefs.setString('userRole', role);
+      await prefs.setString('user', json.encode(user));
 
       return true;
     } else {
@@ -109,6 +111,16 @@ class AuthService {
 
   Future<bool> isUser() async {
     return await hasRole(['USER']);
+  }
+
+  Future<Map<String, dynamic>?> getStoredUser() async {
+    final sp = await SharedPreferences.getInstance();
+    final userJson = sp.getString('user');
+    if (userJson != null) {
+      return jsonDecode(userJson);
+    } else {
+      return null;
+    }
   }
 
 

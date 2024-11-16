@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/model/booking.dart';
+import 'package:hotelbooking/model/room.dart';
+import 'package:hotelbooking/service/AuthService.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingForm extends StatefulWidget {
+
+  final Room room;
+
+  BookingForm({required this.room});
+
   @override
   _BookingFormState createState() => _BookingFormState();
 }
@@ -18,8 +25,20 @@ class _BookingFormState extends State<BookingForm> {
   TextEditingController userEmailController = TextEditingController();
   TextEditingController totalPriceController = TextEditingController();
 
-  // Format dates for display
   final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+
+  // Calculate total price based on room price and number of nights
+  void _calculateTotalPrice() {
+    if (checkinDate != null && checkoutDate != null) {
+      final duration = checkoutDate!.difference(checkinDate!);
+      if (duration.inDays > 0) {
+        final totalPrice = duration.inDays * widget.room.price;
+        totalPriceController.text = totalPrice.toString();
+      } else {
+        totalPriceController.text = '0';
+      }
+    }
+  }
 
   Future<void> _selectCheckinDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -32,6 +51,7 @@ class _BookingFormState extends State<BookingForm> {
       setState(() {
         checkinDate = picked;
       });
+    _calculateTotalPrice(); // Recalculate total price when check-in date changes
   }
 
   Future<void> _selectCheckoutDate(BuildContext context) async {
@@ -45,11 +65,11 @@ class _BookingFormState extends State<BookingForm> {
       setState(() {
         checkoutDate = picked;
       });
+    _calculateTotalPrice(); // Recalculate total price when check-out date changes
   }
 
-  void _saveBooking() {
+  void _saveBooking() async {
     if (_formKey.currentState!.validate()) {
-      // Create Booking instance
       final booking = Booking(
         checkindate: checkinDate,
         checkoutdate: checkoutDate,
@@ -60,11 +80,9 @@ class _BookingFormState extends State<BookingForm> {
         userEmail: userEmailController.text,
       );
 
-      // Call createHotel(booking) to save booking
-      // You need to implement this call with your service
       print("Booking Saved: ${booking.toJson()}");
+      _clearDatesFromStorage();
     }
-    _clearDatesFromStorage();
   }
 
   Future<void> _clearDatesFromStorage() async {
@@ -77,18 +95,22 @@ class _BookingFormState extends State<BookingForm> {
     });
   }
 
-
-
   @override
   void initState() {
     super.initState();
-    _loadDates();
+    _loadData();
   }
 
-  Future<void> _loadDates() async {
+  Future<void> _loadData() async {
     checkinDate = await _getDateFromStorage('checkInDate');
     checkoutDate = await _getDateFromStorage('checkOutDate');
-    setState(() {}); // Update the UI after loading dates
+    hotelNameController.text = widget.room.hotel.name!;
+    roomTypeController.text = widget.room.roomType;
+    Map<String, dynamic>? user = await AuthService().getStoredUser();
+    userNameController.text = user?['name'];
+    userEmailController.text = user?['email'];
+    _calculateTotalPrice(); // Calculate total price based on dates and room price
+    setState(() {});
   }
 
   Future<DateTime?> _getDateFromStorage(String key) async {
@@ -110,51 +132,48 @@ class _BookingFormState extends State<BookingForm> {
           key: _formKey,
           child: ListView(
             children: [
-              // Check-in Date
               ListTile(
                 title: Text("Check-in Date: ${checkinDate != null ? dateFormat.format(checkinDate!) : 'Select Date'}"),
                 trailing: Icon(Icons.calendar_today),
                 onTap: () => _selectCheckinDate(context),
               ),
-              // Check-out Date
               ListTile(
                 title: Text("Check-out Date: ${checkoutDate != null ? dateFormat.format(checkoutDate!) : 'Select Date'}"),
                 trailing: Icon(Icons.calendar_today),
                 onTap: () => _selectCheckoutDate(context),
               ),
-              // Room Type
               TextFormField(
                 controller: roomTypeController,
                 decoration: InputDecoration(labelText: 'Room Type'),
+                enabled: false,
                 validator: (value) => value == null || value.isEmpty ? 'Please enter room type' : null,
               ),
-              // Hotel Name
               TextFormField(
                 controller: hotelNameController,
                 decoration: InputDecoration(labelText: 'Hotel Name'),
+                enabled: false,
                 validator: (value) => value == null || value.isEmpty ? 'Please enter hotel name' : null,
               ),
-              // User Name
               TextFormField(
                 controller: userNameController,
                 decoration: InputDecoration(labelText: 'User Name'),
+                enabled: false,
                 validator: (value) => value == null || value.isEmpty ? 'Please enter user name' : null,
               ),
-              // User Email
               TextFormField(
                 controller: userEmailController,
                 decoration: InputDecoration(labelText: 'User Email'),
                 validator: (value) => value == null || value.isEmpty ? 'Please enter user email' : null,
+                enabled: false,
                 keyboardType: TextInputType.emailAddress,
               ),
-              // Total Price
               TextFormField(
                 controller: totalPriceController,
                 decoration: InputDecoration(labelText: 'Total Price'),
                 keyboardType: TextInputType.number,
+                enabled: false,
                 validator: (value) => value == null || value.isEmpty ? 'Please enter total price' : null,
               ),
-              // Submit Button
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveBooking,
@@ -167,3 +186,4 @@ class _BookingFormState extends State<BookingForm> {
     );
   }
 }
+

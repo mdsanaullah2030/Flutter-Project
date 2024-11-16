@@ -6,56 +6,23 @@ import 'loginpage.dart';
 import 'package:http/http.dart' as http;
 
 class RegistrationPage extends StatefulWidget {
-
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController name = TextEditingController();
-
   final TextEditingController email = TextEditingController();
-
   final TextEditingController password = TextEditingController();
-
   final TextEditingController confirmPassword = TextEditingController();
-
   final TextEditingController cell = TextEditingController();
-
   final TextEditingController address = TextEditingController();
-
-  // final DateTimeFieldPickerPlatform dob= DateTimeFieldPickerPlatform.material;
-  final DateTimeFieldPickerPlatform dob=DateTimeFieldPickerPlatform.material;
-
-  // final TextEditingController gender = TextEditingController();
-
+  final DateTimeFieldPickerPlatform dob = DateTimeFieldPickerPlatform.material;
   String? selectedGender;
   DateTime? selecteDOB;
-
   final _formKey = GlobalKey<FormState>();
 
-
-
-
-  // // Method to validate form and check passwords
-  // void _register() {
-  //   if (_formKey.currentState!.validate()) {
-  //
-  //
-  //     String uName = name.text;
-  //     String uEmail = email.text;
-  //     String uPassword = password.text;
-  //
-  //
-  //
-  //     // Registration logic goes here (e.g., sending data to server)
-  //
-  //     print('Name: $uName, Email: $uEmail, Password: $uPassword');
-  //   }
-  // }
-  // Method to validate form and check passwords
   void _register() async {
-
     if (_formKey.currentState!.validate()) {
       String uName = name.text;
       String uEmail = email.text;
@@ -68,11 +35,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // Send data to the server
       final response = await _sendDataToBackend(uName, uEmail, uPassword, uCell, uAddress, uGender, uDob);
 
-      if (response.statusCode == 201 || response.statusCode == 200  ) {
-        // Registration successful
+      if (response.statusCode == 201 || response.statusCode == 200) {
         print('Registration successful!');
       } else if (response.statusCode == 409) {
-        // User already exists
         print('User already exists!');
       } else {
         print('Registration failed with status: ${response.statusCode}');
@@ -80,18 +45,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  // HTTP POST Request to send data to backend
   Future<http.Response> _sendDataToBackend(
-      String name,
-      String email,
-      String password,
-      String cell,
-      String address,
-      String gender,
-      String dob,
-      ) async {
-
-    const String url = 'http://localhost:8080/register'; // Android emulator
+      String name, String email, String password, String cell, String address, String gender, String dob) async {
+    const String url = 'http://localhost:8080/register';
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
@@ -108,11 +64,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return response;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xffB81736),
+              Color(0xff2B1836),
+            ],
+          ),
+        ),
         padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Form(
@@ -122,86 +89,122 @@ class _RegistrationPageState extends State<RegistrationPage> {
               children: [
                 TextField(
                   controller: name,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Full Name',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.person)),
+                    labelText: 'Full Name',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.person, color: Colors.black87), // Set icon color to white
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+
+                SizedBox(height: 20),
                 TextField(
                   controller: email,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Email ',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email)),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.email, color: Colors.black87), // Set icon color to white
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 TextField(
                   controller: password,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Password ',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outlined)
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.lock_outlined, color: Colors.black87), // Set icon color to white
                   ),
-                  obscureText: true,
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 TextField(
                   controller: confirmPassword,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Confirm Password ',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outlined)
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.lock_outlined, color: Colors.black87), // Set icon color to white
                   ),
-                  obscureText: true,
                 ),
-
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 TextField(
                   controller: cell,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Cell Number',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.phone)),
+                    labelText: 'Cell',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.phone, color: Colors.black87), // Set icon color to white
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 TextField(
                   controller: address,
+                  style: TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                      labelText: 'Address',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.maps_home_work_rounded)),
+                    labelText: 'Address',
+                    labelStyle: TextStyle(color: Colors.white60), // Set label text color to white
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87), // Set border color to white
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.indigo), // Set focused border color to white
+                    ),
+                    prefixIcon: Icon(Icons.maps_home_work_rounded, color: Colors.black87), // Set icon color to white
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-
+                SizedBox(height: 20),
                 DateTimeFormField(
                   decoration: const InputDecoration(labelText: 'Date of Birth'),
                   mode: DateTimeFieldPickerMode.date,
                   pickerPlatform: dob,
                   onChanged: (DateTime? value) {
-                    print(value);
+                    selecteDOB = value;
                   },
                 ),
-
-                SizedBox(
-                  height: 20,
-                ),
-
+                SizedBox(height: 20),
                 Row(
                   children: [
-                    Text('Gender:'),
+                    Text(
+                      'Gender:',
+                      style: TextStyle(color: Colors.white), // Set color for "Gender:" label
+                    ),
                     Expanded(
                       child: Row(
                         children: [
@@ -214,7 +217,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               });
                             },
                           ),
-                          Text('Male'),
+                          Text(
+                            'Male',
+                            style: TextStyle(color: Colors.white), // Set color for "Male"
+                          ),
                         ],
                       ),
                     ),
@@ -230,7 +236,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               });
                             },
                           ),
-                          Text('Female'),
+                          Text(
+                            'Female',
+                            style: TextStyle(color: Colors.white), // Set color for "Female"
+                          ),
                         ],
                       ),
                     ),
@@ -241,35 +250,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             value: 'Other',
                             groupValue: selectedGender,
                             onChanged: (String? value) {
-                              setState((){
+                              setState(() {
                                 selectedGender = value;
                               });
                             },
                           ),
-                          Text('Other'),
+                          Text(
+                            'Other',
+                            style: TextStyle(color: Colors.white), // Set color for "Other"
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
+
                 ElevatedButton(
-                    onPressed: () {
-                      _register();
-                    },
-                    child: Text(
-                      "Registration",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      foregroundColor: Colors.white,
-                    )
+                  onPressed: _register,
+                  child: Text(
+                    "Register",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.amberAccent,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
-
-                // Login Text Button
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -280,11 +286,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: Text(
                     'Login',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.amber,
                       decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                )
+                ),
+
               ],
             ),
           ),

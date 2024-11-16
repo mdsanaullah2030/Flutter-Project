@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/location/addshow.dart';
 import 'package:hotelbooking/model/Location.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
@@ -153,6 +154,28 @@ class _AddLocationPageState extends State<AddLocationPage> {
                 onPressed: _saveLocation,
                 child: Text('Save Location'),
               ),
+
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LocationViewAdd()), // Navigate to LocationViewAdd
+                  );
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.amber,
+
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              )
+              ,
+
+
+
             ],
           ),
         ),

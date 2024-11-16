@@ -13,7 +13,7 @@ import 'dart:typed_data';
 import 'package:image_picker_web/image_picker_web.dart';
 
 class UpdateHotelPage extends StatefulWidget {
-  final Hotel? hotel;  // Add hotel as an optional parameter for updates
+  final Hotel? hotel;
 
   const UpdateHotelPage({Key? key, this.hotel}) : super(key: key);
 
@@ -23,44 +23,33 @@ class UpdateHotelPage extends StatefulWidget {
 
 class _UpdateHotelPageState extends State<UpdateHotelPage> {
   final _formKey = GlobalKey<FormState>();
-
   XFile? selectedImage;
   Uint8List? webImage;
   final ImagePicker _picker = ImagePicker();
-
   String? _selectedLocation;
   List<Location> _locations = [];
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _minPriceController = TextEditingController();
   final TextEditingController _maxPriceController = TextEditingController();
-  String _selectedRating = '3'; // default rating
+  String _selectedRating = '3';
 
   Hotel? _hotel;
+
   @override
   void initState() {
     super.initState();
-
-    // Check if hotel is passed in and not null
     if (widget.hotel != null) {
       _hotel = widget.hotel;
-
-      // Check each field before accessing it
-      _nameController.text = _hotel?.name ?? ''; // Default to empty string if null
-      _addressController.text = _hotel?.address ?? ''; // Default to empty string if null
-      _minPriceController.text = _hotel?.minPrice?.toString() ?? ''; // Default to empty string if null
-      _maxPriceController.text = _hotel?.maxPrice?.toString() ?? ''; // Default to empty string if null
-      _selectedRating = _hotel?.rating ?? '3'; // Default to '3' if null
-
-      // Make sure location is not null before accessing its properties
-      _selectedLocation = _hotel?.location?.id?.toString() ?? ''; // Default to empty string if location is null
+      _nameController.text = _hotel?.name ?? '';
+      _addressController.text = _hotel?.address ?? '';
+      _minPriceController.text = _hotel?.minPrice?.toString() ?? '';
+      _maxPriceController.text = _hotel?.maxPrice?.toString() ?? '';
+      _selectedRating = _hotel?.rating ?? '3';
+      _selectedLocation = _hotel?.location?.id?.toString() ?? '';
     }
-
     _loadLocations();
   }
-
-
 
   Future<void> _loadLocations() async {
     try {
@@ -112,7 +101,9 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
         'location': {'id': _selectedLocation},
       };
 
-      var uri = _hotel == null ? Uri.parse('http://localhost:8080/api/hotel/save') : Uri.parse('http://localhost:8080/api/hotel/update/${_hotel!.id}');
+      var uri = _hotel == null
+          ? Uri.parse('http://localhost:8080/api/hotel/save')
+          : Uri.parse('http://localhost:8080/api/hotel/updatehotel/${_hotel!.id}');
       var request = http.MultipartRequest('POST', uri);
 
       request.files.add(http.MultipartFile.fromString(
@@ -155,13 +146,14 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
     _maxPriceController.clear();
     setState(() {
       selectedImage = null;
+      webImage = null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${_hotel == null ? 'Add' : 'Edit'} Hotel')),
+      appBar: AppBar(title: Text('${_hotel == null ? 'Update' : 'Update'} Hotel')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -216,23 +208,13 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
                     onPressed: pickImage,
                     child: Text('Pick Image'),
                   ),
-                  if (selectedImage != null)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(selectedImage!.name),
-                    ),
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: _saveHotel,
+                    child: Text(_hotel == null ? 'Update Hotel' : 'Update Hotel'),
+                  ),
                 ],
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _saveHotel,
-                child: Text('${_hotel == null ? 'Add' : 'Update'} Hotel'),
-              ),
-              if (_hotel != null)
-                TextButton(
-                  onPressed: _clearForm,
-                  child: Text('Clear Form'),
-                ),
             ],
           ),
         ),

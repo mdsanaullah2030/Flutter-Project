@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/model/booking.dart';
 
 import 'package:hotelbooking/service/booking_service.dart';
 import 'package:pdf/widgets.dart' as pw;
+
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -22,7 +24,32 @@ class _AllBookingViewPageState extends State<ViewBooking> {
     futureBooking = BookingService().fetchBookings();
   }
 
+  Future<void> _viewBookingPdf(Booking booking) async {
+    // Create a PDF document
+    final pdf = pw.Document();
 
+    // Add a page to the PDF
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text("Hotel Booking Details", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 20),
+            pw.Text("Hotel: ${booking.hotelName}"),
+            pw.Text("Room Type: ${booking.roomType}"),
+            pw.Text("Check-in: ${booking.checkindate}"),
+            pw.Text("Check-out: ${booking.checkoutdate}"),
+            pw.Text("Total Price: \$${booking.totalprice}"),
+            pw.Text("User: ${booking.userName}"),
+            pw.Text("Email: ${booking.userEmail}"),
+          ],
+        ),
+      ),
+    );
+
+
+  }
 
   @override
   Widget build(BuildContext context) {

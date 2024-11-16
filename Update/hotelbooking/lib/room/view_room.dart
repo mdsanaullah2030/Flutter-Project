@@ -31,7 +31,17 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hotel and Room Details'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple,Colors.indigoAccent,Colors.indigoAccent,Colors.lightBlueAccent,Colors.indigo], // Mix of blue and purple
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
+
       body: FutureBuilder<Hotel>(
         future: futureHotel,
         builder: (context, snapshot) {
@@ -97,76 +107,90 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
                           itemBuilder: (context, index) {
                             final room = roomSnapshot.data![index];
                             return Card(
-                              margin: const EdgeInsets.symmetric( horizontal: 16),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.all(12),
-                                title: Text(
-                                  room.roomType.toString(),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Image at the top
+                                  room.image != null
+                                      ? ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(8.0),
+                                      topRight: Radius.circular(8.0),
+                                    ),
+                                    child: Image.network(
+                                      "http://localhost:8080/images/room/${room.image}",
+                                      width: double.infinity,
+                                      height: 150,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                      : Container(
+                                    height: 150,
+                                    width: double.infinity,
+                                    color: Colors.grey[300],
+                                    child: Icon(
+                                      Icons.image,
+                                      size: 50,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Price: \$${room.price?.toStringAsFixed(2) ?? 'N/A'}\n'
-                                          'Area: ${room.area ?? 'N/A'} sq. ft.\n'
-                                          'Adults: ${room.adultNo ?? 0}, Children: ${room.childNo ?? 0}\n'
-                                          'Availability: ${room.availability ? "Available" : "Not available"}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    // Button to view or book room
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => BookingForm(),
+                                  // Room details below the image
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          room.roomType.toString(),
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Price: \$${room.price?.toStringAsFixed(2) ?? 'N/A'}\n'
+                                              'Area: ${room.area ?? 'N/A'} sq. ft.\n'
+                                              'Adults: ${room.adultNo ?? 0}, Children: ${room.childNo ?? 0}\n'
+                                              'Availability: ${room.availability ? "Available" : "available"}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => BookingForm(room: room),
+                                              ),
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.amber,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 12.0,
+                                              horizontal: 24.0,
                                             ),
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.amber,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 12.0,
-                                            horizontal: 24.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                            ),
                                           ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Book Room',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
+                                          child: const Text(
+                                            'Book Room',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                // Display room image or icon if unavailable
-                                trailing: room.image != null
-                                    ? Image.network(
-                                  "http://localhost:8080/images/room/${room.image}",
-                                  width: 70,
-                                  height: 70,
-                                  fit: BoxFit.cover,
-                                )
-                                    : Icon(
-                                  Icons.image,
-                                  size: 50,
-                                  color: Colors.grey,
-                                ),
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -175,6 +199,7 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
                     },
                   ),
                 ),
+
               ],
             );
           }

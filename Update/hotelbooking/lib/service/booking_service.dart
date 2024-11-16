@@ -40,7 +40,7 @@ class BookingService {
     final formData = FormData();
 
     // Add only the hotel data to formData
-    formData.fields.add(MapEntry('hotel', jsonEncode(booking.toJson())));
+    formData.fields.add(MapEntry('booking', jsonEncode(booking.toJson())));
 
     final token = await authService.getToken();
     final headers = {'Authorization': 'Bearer $token'};

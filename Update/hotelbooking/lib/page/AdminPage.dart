@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
-import 'package:hotelbooking/hotel/AllHotelViewPage.dart';
 import 'package:hotelbooking/location/AddLocation.dart';
-import 'package:hotelbooking/location/UpdateLocation.dart';
 import 'package:hotelbooking/location/location_view.dart';
 import 'package:hotelbooking/page/loginpage.dart';
 import 'package:hotelbooking/room/addRoom.dart';
-
 
 class AdminPage extends StatelessWidget {
   @override
@@ -22,6 +19,18 @@ class AdminPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Admin photo section
+            Center(
+              child: CircleAvatar(
+                radius: 50, // Size of the avatar
+                backgroundImage: NetworkImage(
+                  'https://avatars.githubusercontent.com/u/158471899?v=4', // Replace with the actual URL
+                ),
+                backgroundColor: Colors.grey[300], // Fallback color if image is not available
+              ),
+            ),
+            SizedBox(height: 20),
+            // Welcome text
             Text(
               'Welcome, Admin!',
               style: TextStyle(
@@ -34,7 +43,10 @@ class AdminPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton.icon(
               icon: Icon(Icons.people),
-              label: Text('View Users'),
+              label: Text(
+                'View Users',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 // Navigate to users page or call an API to fetch users
                 print("View Users clicked");
@@ -46,7 +58,10 @@ class AdminPage extends StatelessWidget {
             SizedBox(height: 10),
             ElevatedButton.icon(
               icon: Icon(Icons.hotel),
-              label: Text('Manage Hotels'),
+              label: Text(
+                'Manage Hotels',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 // Navigate to manage hotels page or call an API to manage hotels
                 print("Manage Hotels clicked");
@@ -56,109 +71,84 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-
-
             ElevatedButton.icon(
               icon: Icon(Icons.add),
-              label: Text('Location View'),
+              label: Text(
+                'Location View',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
-                // Implement logout functionality or navigate back to login
+                // Navigate to LocationView
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>LocationView()),
-                ); // Example logout: navigate back to login
+                  MaterialPageRoute(builder: (context) => LocationView()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
               ),
             ),
             SizedBox(height: 10),
-
-
-
-
-
-
             ElevatedButton.icon(
-              icon: Icon(Icons.add),
-              label: Text('Add Hotel'),
+              icon: Icon(Icons.add), // Set icon color to white
+              label: Text(
+                'Add Hotel',
+                style: TextStyle(color: Colors.white), // Set text color to white
+              ),
               onPressed: () {
-                // Implement logout functionality or navigate back to login
+                // Navigate to AddHotelPage
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>AddHotelPage()),
-                ); // Example logout: navigate back to login
+                  MaterialPageRoute(builder: (context) => AddHotelPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent, // Background color of the button
               ),
             ),
             SizedBox(height: 10),
-
-
-
-
-
-
             ElevatedButton.icon(
               icon: Icon(Icons.location_city),
-              label: Text('Add Location'),
+              label: Text(
+                'Add Location',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
-                // Implement logout functionality or navigate back to login
+                // Navigate to AddLocationPage
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>AddLocationPage()),
-                ); // Example logout: navigate back to login
+                  MaterialPageRoute(builder: (context) => AddLocationPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
               ),
             ),
             SizedBox(height: 10),
-
-
-
-
             ElevatedButton.icon(
               icon: Icon(Icons.location_city),
-              label: Text('Add Room'),
+              label: Text(
+                'Add Room',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
-                // Implement logout functionality or navigate back to login
+                // Navigate to AddRoomPage
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>AddRoomPage()),
-                ); // Example logout: navigate back to login
+                  MaterialPageRoute(builder: (context) => AddRoomPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
               ),
             ),
             SizedBox(height: 10),
-
-
-            //
-            // ElevatedButton.icon(
-            //   icon: Icon(Icons.location_city),
-            //   label: Text('Add Room'),
-            //   onPressed: () {
-            //     // Implement logout functionality or navigate back to login
-            //     Navigator.pushReplacement(
-            //       context,
-            //       MaterialPageRoute(builder: (context) =>AllHotelViewPage(),
-            //     ); // Example logout: navigate back to login
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: Colors.blueAccent,
-            //   ),
-            // ),
-            //
-
-
-            SizedBox(height: 10),
-
             ElevatedButton.icon(
               icon: Icon(Icons.settings),
-              label: Text('Settings'),
+              label: Text(
+                'Settings',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 // Navigate to settings page
                 print("Settings clicked");
@@ -174,9 +164,9 @@ class AdminPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
-                ); // Example logout: navigate back to login
+                );
               },
-              child: Text('Logout'),
+              child: Text('Logout', style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
               ),

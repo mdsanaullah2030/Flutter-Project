@@ -35,7 +35,7 @@ class HotelProfilePage extends StatelessWidget {
           children: [
             // Hotel Image
             Image.network(
-              hotelImageUrl,
+             'https://images.pexels.com/photos/24805042/pexels-photo-24805042/free-photo-of-view-of-the-mountains-at-sunset-from-the-terrace-with-a-swimming-pool.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
               height: 200,
               fit: BoxFit.cover,
             ),
