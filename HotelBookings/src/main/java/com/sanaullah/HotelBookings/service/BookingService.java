@@ -54,7 +54,7 @@ public class BookingService {
         Room room = roomRepository.findById(booking.getRoom().getId())
                 .orElseThrow(() -> new RuntimeException("Room not found for ID " + booking.getRoom().getId()));
 
-        Hotel hotel = roomRepository.findHotelByRoomId(room.getId());
+        Hotel hotel = roomRepository.findHotelByRoomId(room.getHotel().getId());
 
 
         //new//
@@ -72,7 +72,7 @@ public class BookingService {
 
         booking.setTotalprice(totalPrice);
 
-        User user=userRepository.findByEmail(booking.getUser().getEmail())
+        User user=userRepository.findById(booking.getUser().getId())
                 .orElseThrow(()-> new RuntimeException("User With this Id not Found"));
 
 
