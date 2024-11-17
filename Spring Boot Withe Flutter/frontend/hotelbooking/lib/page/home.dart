@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         children: const [
           Text(
             'হোটেল বুকিং ডোট কোম পক্ষ  হতে আপনাকে স্বাগত',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           Text('Welcome to HotelBooking.com',
               style: TextStyle(fontSize: 12 ,fontWeight: FontWeight.bold)),

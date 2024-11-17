@@ -143,21 +143,7 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton.icon(
-              icon: Icon(Icons.settings),
-              label: Text(
-                'Settings',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                // Navigate to settings page
-                print("Settings clicked");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-              ),
-            ),
-            SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () {
                 // Implement logout functionality or navigate back to login

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/booking/Invoice.dart';
 import 'package:hotelbooking/model/booking.dart';
 import 'package:hotelbooking/model/room.dart';
+import 'package:hotelbooking/page/home.dart';
 import 'package:hotelbooking/service/AuthService.dart';
+import 'package:hotelbooking/service/booking_service.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,7 +71,7 @@ class _BookingFormState extends State<BookingForm> {
     _calculateTotalPrice(); // Recalculate total price when check-out date changes
   }
 
-  void _saveBooking() async {
+  void saveBooking() async {
     if (_formKey.currentState!.validate()) {
       final booking = Booking(
         checkindate: checkinDate,
@@ -78,12 +81,38 @@ class _BookingFormState extends State<BookingForm> {
         hotelName: hotelNameController.text,
         userName: userNameController.text,
         userEmail: userEmailController.text,
+        room: widget.room,
       );
 
-      print("Booking Saved: ${booking.toJson()}");
-      _clearDatesFromStorage();
+      Map<String, dynamic>? userMap = await AuthService().getStoredUser();
+      final bookingWithUser = {
+        ...booking.toJson(),
+        'user': {
+          'id': userMap?['id'],
+        },
+      };
+
+      Booking? savedBooking = await BookingService().saveBooking(bookingWithUser);
+
+      if (savedBooking != null) {
+        _clearDatesFromStorage();
+
+        // Navigate to Invoice page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        );
+      } else {
+        // Handle save failure
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to save booking. Please try again.')),
+        );
+      }
     }
   }
+
 
   Future<void> _clearDatesFromStorage() async {
     final prefs = await SharedPreferences.getInstance();
@@ -176,9 +205,12 @@ class _BookingFormState extends State<BookingForm> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _saveBooking,
+                onPressed: saveBooking,
                 child: Text('Save Booking'),
               ),
+
+
+
             ],
           ),
         ),

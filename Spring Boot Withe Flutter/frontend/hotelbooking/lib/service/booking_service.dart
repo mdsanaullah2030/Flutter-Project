@@ -33,34 +33,25 @@ class BookingService {
   final AuthService authService = AuthService();
 
 
-
-
-
-  Future<Booking?> createHotel(Booking booking) async {
-    final formData = FormData();
-
-    // Add only the hotel data to formData
-    formData.fields.add(MapEntry('booking', jsonEncode(booking.toJson())));
-
-    final token = await authService.getToken();
-    final headers = {'Authorization': 'Bearer $token'};
-
+  Future<Booking?> saveBooking(Map<String, dynamic> bookingWithUserMap) async {
     try {
+      String token = await authService.getToken() ?? '';
       final response = await _dio.post(
         '${apiUrl}save',
-        data: formData,
-        options: Options(headers: headers),
+        data: bookingWithUserMap,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
       );
 
       if (response.statusCode == 200) {
-        final data = response.data as Map<String, dynamic>;
-        return Booking.fromJson(data); // Parse response data to Hotel object
+        return Booking.fromJson(response.data);
       } else {
-        print('Error creating hotel: ${response.statusCode}');
+        print('Error saving booking: ${response.statusCode}');
         return null;
       }
     } on DioError catch (e) {
-      print('Error creating hotel: ${e.message}');
+      print('Error saving booking: ${e.response?.data ?? e.message}');
       return null;
     }
   }

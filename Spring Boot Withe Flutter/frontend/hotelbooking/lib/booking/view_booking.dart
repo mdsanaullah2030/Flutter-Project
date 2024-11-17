@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
+import 'package:hotelbooking/booking/Invoice.dart';
 import 'package:hotelbooking/model/booking.dart';
-
 import 'package:hotelbooking/service/booking_service.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -48,7 +46,16 @@ class _AllBookingViewPageState extends State<ViewBooking> {
       ),
     );
 
-
+    // // Get the directory to save the PDF
+    // final output = await getTemporaryDirectory();
+    // final filePath = "${output.path}/booking_${booking.id}.pdf";
+    // final file = File(filePath);
+    //
+    // // Save the PDF file
+    // await file.writeAsBytes(await pdf.save());
+    //
+    // // Optionally, open or share the PDF file (you can implement this feature as well)
+    // print('PDF saved to: $filePath');
   }
 
   @override
@@ -91,8 +98,29 @@ class _AllBookingViewPageState extends State<ViewBooking> {
                               Text('Email: ${booking.userEmail}'),
                             ],
                           ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.picture_as_pdf),
+                                onPressed: () {
+                                  _viewBookingPdf(booking);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UpdateBookingPage(booking: booking),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-
                       ],
                     ),
                   ),
@@ -105,3 +133,4 @@ class _AllBookingViewPageState extends State<ViewBooking> {
     );
   }
 }
+

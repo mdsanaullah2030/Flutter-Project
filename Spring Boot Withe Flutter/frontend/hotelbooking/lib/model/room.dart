@@ -37,4 +37,19 @@ class Room {
       hotel: Hotel.fromJson(json['hotel']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['roomType'] = roomType;
+    data['image'] = image;
+    data['price'] = price;
+    data['area'] = area;
+    data['adultNo'] = adultNo;
+    data['childNo'] = childNo;
+    data['availability'] = availability;
+    data['hotel'] = hotel?.toJson();
+    return data;
+  }
+
 }
