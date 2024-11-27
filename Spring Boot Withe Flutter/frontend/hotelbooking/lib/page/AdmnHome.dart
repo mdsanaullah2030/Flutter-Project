@@ -4,23 +4,21 @@ import 'package:hotelbooking/booking/view_booking.dart';
 import 'package:hotelbooking/hotel/AddHotelPage.dart';
 import 'package:hotelbooking/location/AddLocation.dart';
 import 'package:hotelbooking/location/UpdateLocation.dart';
-import 'package:hotelbooking/location/addshow.dart';
 import 'package:hotelbooking/location/location_view.dart';
 import 'package:hotelbooking/page/AdminPage.dart';
 import 'package:hotelbooking/page/HotelProfilePage.dart';
-import 'package:hotelbooking/page/home.dart';
 import 'package:hotelbooking/page/loginpage.dart';
 import 'package:hotelbooking/page/registrationpage.dart';
 import 'package:hotelbooking/room/addRoom.dart';
 
-class AdminPage extends StatefulWidget {
-  const AdminPage({super.key});
+class AdminHome extends StatefulWidget {
+  const AdminHome({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<AdminHome> with SingleTickerProviderStateMixin {
   int _carouselIndex = 0;
   late PageController _pageController;
   Timer? _timer;
@@ -28,9 +26,9 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
   late AnimationController _animationController;
 
   static const List<String> _images = [
-    'https://media.istockphoto.com/id/636484522/photo/hotel-resort-swimming-pool.jpg?s=612x612&w=0&k=20&c=ET-8reopQEIhH4YYee6tqlFpfKEg19oLRRCJX3-56rs=',
-    'https://media.istockphoto.com/id/937993150/photo/ipoh-station.jpg?s=612x612&w=0&k=20&c=ytlQI6S-KDzZJ4fE3-hH2iL3E3xLHzb620nt5JQaG9Y=',
-    'https://media.istockphoto.com/id/598696388/photo/emirates-palace-abu-dhabi-united-arab-emirates.jpg?s=612x612&w=0&k=20&c=Hv29s0zkDci83bKhMLe7PR7TeR8GVdBiIudt_ptraS0=',
+    'https://images.pexels.com/photos/14012231/pexels-photo-14012231.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
+    'https://images.pexels.com/photos/9330675/pexels-photo-9330675.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
+    'https://images.pexels.com/photos/12387908/pexels-photo-12387908.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
   ];
 
   static const List<String> _texts = [
@@ -47,16 +45,23 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
 
   final List<Map<String, String>> myItems = [
     {"img": "https://cdn-icons-png.freepik.com/256/11729/11729048.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Add Location"},
-    {"img": "https://cdn-icons-png.freepik.com/256/13086/13086265.png?ga=GA1.1.897004978.1724843830&semt=ais_hybrid", "title": "Add Hotel"},
-    {"img": "https://cdn-icons-png.freepik.com/256/8507/8507773.png?ga=GA1.1.897004978.1724843830&semt=ais_hybrid", "title": "Add Room"},
+    {"img": "https://cdn-icons-png.freepik.com/256/11585/11585941.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Add Hotel"},
+    {"img": "https://cdn-icons-png.freepik.com/256/8424/8424145.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Add Room"},
     {"img": "https://cdn-icons-png.freepik.com/256/5038/5038849.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Update Location"},
     {"img": "https://cdn-icons-png.freepik.com/256/7840/7840432.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Update Hotel"},
-    {"img": "https://cdn-icons-png.freepik.com/256/3281/3281355.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Update Room"},
-
+    {"img": "https://cdn-icons-png.freepik.com/256/3281/3281355.png?ga=GA1.1.1937478974.1725011926&semt=ais_hybrid", "title": "Update Room"}
   ];
 
   final List<String> cardRoutes = [
-
+    // '/viewfirepolicy',
+    // '/viewfirebill',
+    // '/viewfiremoneyreceipt',
+    // '/viewmarinepolicy',
+    // '/viewmarinebill',
+    // '/viewmarinemoneyreceipt',
+    // '/viewsupport',
+    // '/viewfirereports',
+    // '/viewmarinereports',
   ];
 
   @override
@@ -276,7 +281,7 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
               else if (item["title"] == "Update Location") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) =>  LocationViewAdd()),
+                  MaterialPageRoute(builder: (_) =>  UpdateLocationPage()),
                 );
               }
 
@@ -290,7 +295,7 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
               else if (item["title"] == "Admin") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) =>  AdminPage()),
+                  MaterialPageRoute(builder: (_) =>  AdminHome()),
                 );
               }
 
@@ -328,12 +333,10 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
           _buildBottomNavButton(context, 'Location', Icons.location_on_sharp, () {
             Navigator.push(context, MaterialPageRoute(builder: (_) => const LocationView()));
           }),
-          _buildBottomNavButton(context, 'Login', Icons.login, () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) =>  LoginPage() ));
+          _buildBottomNavButton(context, 'hotel', Icons.hotel, () {
+            // Navigator.push(context, MaterialPageRoute(builder: (_) => const ()));
           }),
-          _buildBottomNavButton(context, 'Home', Icons.home, () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) =>  HomePage() ));
-          }),
+          _buildBottomNavButton(context, 'Home', Icons.home, () {}),
           _buildBottomNavButton(context, 'Search', Icons.search, () {}),
           _buildBottomNavButton(context, 'Notifications', Icons.notifications, () {}),
         ],

@@ -49,15 +49,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   ];
 
   final List<String> cardRoutes = [
-    // '/viewfirepolicy',
-    // '/viewfirebill',
-    // '/viewfiremoneyreceipt',
-    // '/viewmarinepolicy',
-    // '/viewmarinebill',
-    // '/viewmarinemoneyreceipt',
-    // '/viewsupport',
-    // '/viewfirereports',
-    // '/viewmarinereports',
+
   ];
 
   @override
@@ -329,10 +321,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           _buildBottomNavButton(context, 'Location', Icons.location_on_sharp, () {
             Navigator.push(context, MaterialPageRoute(builder: (_) => const LocationView()));
           }),
-          _buildBottomNavButton(context, 'hotel', Icons.hotel, () {
-            // Navigator.push(context, MaterialPageRoute(builder: (_) => const ()));
+          _buildBottomNavButton(context, 'Login', Icons.login, () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) =>  LoginPage() ));
           }),
-          _buildBottomNavButton(context, 'Home', Icons.home, () {}),
+          _buildBottomNavButton(context, 'Home', Icons.home, () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) =>  LoginPage() ));
+          }),
+
           _buildBottomNavButton(context, 'Search', Icons.search, () {}),
           _buildBottomNavButton(context, 'Notifications', Icons.notifications, () {}),
         ],

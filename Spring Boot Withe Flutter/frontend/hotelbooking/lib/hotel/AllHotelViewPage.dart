@@ -215,60 +215,6 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
 
 
 
-                                  // Add Hotel button
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddHotelPage(),
-                                        ),
-                                      );
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                        if (states.contains(MaterialState.hovered)) {
-                                          return Colors.lightBlueAccent.shade700; // Hover color
-                                        }
-                                        return Colors.amber; // Default color
-                                      }),
-                                      overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                                        if (states.contains(MaterialState.pressed)) {
-                                          return Colors.blueGrey.shade900.withOpacity(0.2); // Ripple effect color
-                                        }
-                                        return null; // Default ripple effect
-                                      }),
-                                      textStyle: MaterialStateProperty.all(
-                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                      ),
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12), // Rounded corners
-                                        ),
-                                      ),
-                                      padding: MaterialStateProperty.all(
-                                        const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(Icons.add_home_work, color: Colors.white), // Icon color
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          'Add Hotel',
-                                          style: TextStyle(
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-
-
-
-
                                   // View Room button
                                   ElevatedButton(
                                     onPressed: () {

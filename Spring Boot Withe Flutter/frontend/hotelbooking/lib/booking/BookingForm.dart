@@ -97,21 +97,35 @@ class _BookingFormState extends State<BookingForm> {
       if (savedBooking != null) {
         _clearDatesFromStorage();
 
-        // Navigate to Invoice page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
+        // Show success alert
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Booking successfully saved!'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
           ),
         );
+
+        // Navigate to Home page after a short delay
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        });
       } else {
-        // Handle save failure
+        // Show error alert
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save booking. Please try again.')),
+          SnackBar(
+            content: Text('Failed to save booking. Please try again.'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 3),
+          ),
         );
       }
     }
   }
+
 
 
   Future<void> _clearDatesFromStorage() async {

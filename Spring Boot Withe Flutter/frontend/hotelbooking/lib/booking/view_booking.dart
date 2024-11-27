@@ -61,76 +61,127 @@ class _AllBookingViewPageState extends State<ViewBooking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Bookings"),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.teal, Colors.blue, Colors.greenAccent,Colors.teal], // Define gradient colors
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            title: Text('All Boking'),
+            backgroundColor: Colors.transparent, // Make AppBar background transparent
+            elevation: 0, // Optional: Remove shadow
+          ),
+        ),
       ),
-      body: FutureBuilder<List<Booking>>(
-        future: futureBooking,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No bookings available'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final booking = snapshot.data![index];
-                return Card(
-                  margin: const EdgeInsets.all(10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          title: Text('Hotel: ${booking.hotelName}'),
-                          subtitle: Column(
+      body: Container( // Use Container to apply the decoration
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.lightGreen[50]!, // First color
+                Colors.blue[50]!,
+                Colors.indigo[50]!,
+                Colors.red[50]!, // Second color
+              ],
+              begin: Alignment.topLeft, // Start of the gradient
+              end: Alignment.bottomRight, // End of the gradient
+            ),
+          ),
+          child: FutureBuilder<List<Booking>>(
+            future: futureBooking, // Replace with your actual future data source
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No bookings available', style: TextStyle(fontSize: 16)));
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final booking = snapshot.data![index];
+                    return MouseRegion(
+                      onEnter: (_) {
+                        // You can add any hover logic here (e.g., changing color)
+                      },
+                      onExit: (_) {
+                        // Revert changes when mouse leaves
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.all(10),
+                        color: Colors.white, // Background color of the card
+                        elevation: 5, // Optional: adds shadow to the card
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // Rounded corners for the card
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Room Type: ${booking.roomType}'),
-                              Text('Check-in: ${booking.checkindate}'),
-                              Text('Check-out: ${booking.checkoutdate}'),
-                              Text('Total Price: \$${booking.totalprice}'),
-                              Text('User: ${booking.userName}'),
-                              Text('Email: ${booking.userEmail}'),
-                            ],
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.picture_as_pdf),
-                                onPressed: () {
-                                  _viewBookingPdf(booking);
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => UpdateBookingPage(booking: booking),
+                              ListTile(
+                                title: Text(
+                                  'Hotel: ${booking.hotelName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Room Type: ${booking.roomType}'),
+                                    Text('Check-in: ${booking.checkindate}'),
+                                    Text('Check-out: ${booking.checkoutdate}'),
+                                    Text('Total Price: \$${booking.totalprice}'),
+                                    Text('User: ${booking.userName}'),
+                                    Text('Email: ${booking.userEmail}'),
+                                  ],
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.picture_as_pdf),
+                                      onPressed: () {
+                                        _viewBookingPdf(booking); // Add your PDF viewing logic
+                                      },
                                     ),
-                                  );
-                                },
+                                    IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                UpdateBookingPage(booking: booking),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
-              },
-            );
-          }
-        },
+              }
+            },
+          )
+
+
       ),
     );
   }
+
 }
 
