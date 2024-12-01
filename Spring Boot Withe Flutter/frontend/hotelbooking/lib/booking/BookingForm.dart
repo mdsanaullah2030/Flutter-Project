@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelbooking/booking/Invoice.dart';
+import 'package:hotelbooking/booking/view_booking.dart';
 import 'package:hotelbooking/model/booking.dart';
 import 'package:hotelbooking/model/room.dart';
 import 'package:hotelbooking/page/home.dart';
@@ -168,67 +169,112 @@ class _BookingFormState extends State<BookingForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Booking Form")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              ListTile(
-                title: Text("Check-in Date: ${checkinDate != null ? dateFormat.format(checkinDate!) : 'Select Date'}"),
-                trailing: Icon(Icons.calendar_today),
-                onTap: () => _selectCheckinDate(context),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.teal, Colors.blue, Colors.greenAccent], // Define gradient colors
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              ListTile(
-                title: Text("Check-out Date: ${checkoutDate != null ? dateFormat.format(checkoutDate!) : 'Select Date'}"),
-                trailing: Icon(Icons.calendar_today),
-                onTap: () => _selectCheckoutDate(context),
-              ),
-              TextFormField(
-                controller: roomTypeController,
-                decoration: InputDecoration(labelText: 'Room Type'),
-                enabled: false,
-                validator: (value) => value == null || value.isEmpty ? 'Please enter room type' : null,
-              ),
-              TextFormField(
-                controller: hotelNameController,
-                decoration: InputDecoration(labelText: 'Hotel Name'),
-                enabled: false,
-                validator: (value) => value == null || value.isEmpty ? 'Please enter hotel name' : null,
-              ),
-              TextFormField(
-                controller: userNameController,
-                decoration: InputDecoration(labelText: 'User Name'),
-                enabled: false,
-                validator: (value) => value == null || value.isEmpty ? 'Please enter user name' : null,
-              ),
-              TextFormField(
-                controller: userEmailController,
-                decoration: InputDecoration(labelText: 'User Email'),
-                validator: (value) => value == null || value.isEmpty ? 'Please enter user email' : null,
-                enabled: false,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextFormField(
-                controller: totalPriceController,
-                decoration: InputDecoration(labelText: 'Total Price'),
-                keyboardType: TextInputType.number,
-                enabled: false,
-                validator: (value) => value == null || value.isEmpty ? 'Please enter total price' : null,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: saveBooking,
-                child: Text('Save Booking'),
-              ),
-
-
-
-            ],
+            ),
+            child: AppBar(
+              title: Text('Booking Room'),
+              backgroundColor: Colors.transparent, // Make AppBar background transparent
+              elevation: 0, // Optional: Remove shadow
+            ),
           ),
         ),
-      ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.lightGreen[50]!, // First color
+                Colors.blue[50]!,
+                Colors.indigo[50]!,
+                Colors.red[50]!, // Second color
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  ListTile(
+                    title: Text("Check-in Date: ${checkinDate != null ? dateFormat.format(checkinDate!) : 'Select Date'}"),
+                    trailing: Icon(Icons.calendar_today),
+                    onTap: () => _selectCheckinDate(context),
+                  ),
+                  ListTile(
+                    title: Text("Check-out Date: ${checkoutDate != null ? dateFormat.format(checkoutDate!) : 'Select Date'}"),
+                    trailing: Icon(Icons.calendar_today),
+                    onTap: () => _selectCheckoutDate(context),
+                  ),
+                  TextFormField(
+                    controller: roomTypeController,
+                    decoration: InputDecoration(labelText: 'Room Type'),
+                    enabled: false,
+                    validator: (value) => value == null || value.isEmpty ? 'Please enter room type' : null,
+                  ),
+                  TextFormField(
+                    controller: hotelNameController,
+                    decoration: InputDecoration(labelText: 'Hotel Name'),
+                    enabled: false,
+                    validator: (value) => value == null || value.isEmpty ? 'Please enter hotel name' : null,
+                  ),
+                  TextFormField(
+                    controller: userNameController,
+                    decoration: InputDecoration(labelText: 'User Name'),
+                    enabled: false,
+                    validator: (value) => value == null || value.isEmpty ? 'Please enter user name' : null,
+                  ),
+                  TextFormField(
+                    controller: userEmailController,
+                    decoration: InputDecoration(labelText: 'User Email'),
+                    validator: (value) => value == null || value.isEmpty ? 'Please enter user email' : null,
+                    enabled: false,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  TextFormField(
+                    controller: totalPriceController,
+                    decoration: InputDecoration(labelText: 'Total Price'),
+                    keyboardType: TextInputType.number,
+                    enabled: false,
+                    validator: (value) => value == null || value.isEmpty ? 'Please enter total price' : null,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: saveBooking,
+                    child: Text('Save Booking'),
+                  ),
+                  SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ViewBooking()),
+                      );
+                    },
+                    child: Text(
+                      'View Booking',
+                      style: TextStyle(
+                        color: Colors.amber,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+
     );
   }
 }

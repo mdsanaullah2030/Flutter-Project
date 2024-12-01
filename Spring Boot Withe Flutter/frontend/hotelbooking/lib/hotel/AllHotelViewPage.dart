@@ -101,8 +101,8 @@ class _AllHotelViewPageState extends State<AllHotelViewPage> {
           
           
           //Hotel data list//
-          
-          
+
+
           Expanded(
             child: FutureBuilder<List<Hotel>>(
               future: futureHotels,

@@ -121,8 +121,10 @@ class _LocationViewState extends State<LocationView> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xffB81736),
-              Color(0xff2B1836),
+              Colors.indigo[100]!, // First color
+              Colors.blue[100]!,
+              Colors.indigo[100]!,
+              Colors.blueGrey[100]!, // Second color
             ],
           ),
         ),
@@ -130,56 +132,103 @@ class _LocationViewState extends State<LocationView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Check-in Date:"),
-            TextField(
-              readOnly: true,
-              onTap: () => _selectDate(context, true),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.amber,
-                hintText: checkInDate != null
-                    ? dateFormat.format(checkInDate!)
-
-                    : "Select Check-in Date",
-                suffixIcon: Icon(Icons.calendar_today),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.indigo[200]!, // First color
+                    Colors.blue[200]!,
+                    Colors.indigo[200]!,
+                    Colors.blueGrey[200]!, // Second color
+                  ],
+                  begin: Alignment.topLeft,  // Start of the gradient
+                  end: Alignment.bottomRight, // End of the gradient
+                ),
+                borderRadius: BorderRadius.circular(12.0), // Rounded corners
+              ),
+              child: TextField(
+                readOnly: true,
+                onTap: () => _selectDate(context, true),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.transparent, // To let the gradient show through
+                  hintText: checkInDate != null
+                      ? dateFormat.format(checkInDate!)
+                      : "Select Check-in Date",
+                  suffixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),
+
             SizedBox(height: 16.0),
             Text("Check-out Date:"),
-            TextField(
-              readOnly: true,
-              onTap: () => _selectDate(context, false),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.amber,
-                hintText: checkOutDate != null
-                    ? dateFormat.format(checkOutDate!)
-                    : "Select Check-out Date",
-                suffixIcon: Icon(Icons.calendar_today),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.indigo[200]!, // First color
+                    Colors.blue[200]!,
+                    Colors.indigo[200]!,
+                    Colors.blueGrey[200]!, // Second color
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12.0), // Rounded corners
+              ),
+              child: TextField(
+                readOnly: true,
+                onTap: () => _selectDate(context, false),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.transparent, // Ensure the gradient is visible
+                  hintText: checkOutDate != null
+                      ? dateFormat.format(checkOutDate!)
+                      : "Select Check-out Date",
+                  suffixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),
+
             SizedBox(height: 16.0),
             // Search bar
-            TextField(
-              onChanged: _filterLocations,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.amber,
-                hintText: 'Search Locations',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide.none,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.indigo[200]!, // First color
+                    Colors.blue[200]!,
+                    Colors.indigo[200]!,
+                    Colors.blueGrey[200]!, // Second color
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12.0), // Rounded corners
+              ),
+              child: TextField(
+                onChanged: _filterLocations,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.transparent, // Ensure the gradient is visible
+                  hintText: 'Search Locations',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),
+
             SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -267,13 +316,21 @@ class _LocationViewState extends State<LocationView> {
       ),
     );
   }
-
   Widget _buildCounter(String label, int value, ValueChanged<int> onChanged) {
     return Container(
       width: 120.0,
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: Colors.amber,
+        gradient: LinearGradient(
+          colors: [
+            Colors.indigo[200]!, // First color
+            Colors.blue[200]!,
+            Colors.indigo[200]!,
+            Colors.blueGrey[200]!, // Second color
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(color: Colors.grey, width: 1.0),
       ),
@@ -312,4 +369,5 @@ class _LocationViewState extends State<LocationView> {
       ),
     );
   }
+
 }

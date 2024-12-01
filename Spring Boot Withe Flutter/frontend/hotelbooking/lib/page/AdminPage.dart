@@ -139,6 +139,9 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
     );
   }
 
+
+  //Drawer use//
+
   Drawer _buildDrawer() {
     return Drawer(
       child: ListView(
@@ -175,6 +178,11 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
     );
   }
 
+
+
+
+
+
   Widget _buildDrawerItem(BuildContext context, IconData icon, String label, String route) {
     return ListTile(
       leading: Icon(icon),
@@ -185,18 +193,35 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
     );
   }
 
+//Body BackRaont//
+
   Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          _buildCarousel(),
-          const SizedBox(height: 15),
-          _buildGrid(),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.lightGreen[300]!, // First color
+            Colors.blue[200]!,
+            Colors.indigo[200]!,
+            Colors.red[200]!, // Second color
+          ],
+          begin: Alignment.topLeft, // Starting point of the gradient
+          end: Alignment.bottomRight, // Ending point of the gradient
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            _buildCarousel(),
+            const SizedBox(height: 15),
+            _buildGrid(),
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildCarousel() {
     return ClipRRect(
@@ -295,21 +320,47 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
               }
 
             },
-            child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.network(item["img"]!, height: 50),
-                  const SizedBox(height: 10),
-                  Text(
-                    item["title"]!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ],
+
+            //Cade view//
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.lightGreen[300]!, // First color
+                    Colors.blue[200]!,
+                    Colors.indigo[200]!,
+                    Colors.red[200]!, // Second color
+                  ],
+                  begin: Alignment.topLeft, // Start of the gradient
+                  end: Alignment.bottomRight, // End of the gradient
+                ),
+                borderRadius: BorderRadius.circular(15), // Match the Card's border radius
+              ),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                color: Colors.transparent, // Ensure the Card doesn't overwrite the gradient
+                elevation: 5, // Optional: Add some elevation for shadow
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.network(item["img"]!, height: 50),
+                    const SizedBox(height: 10),
+                    Text(
+                      item["title"]!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+
+
           );
         },
       ),
@@ -317,29 +368,46 @@ class _HomePageState extends State<AdminPage> with SingleTickerProviderStateMixi
   }
 
 
-
+//BottomAppBar //
 
 
   Widget _buildBottomNavigationBar(BuildContext context) {
-    return BottomAppBar(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildBottomNavButton(context, 'Location', Icons.location_on_sharp, () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => const LocationView()));
-          }),
-          _buildBottomNavButton(context, 'Login', Icons.login, () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) =>  LoginPage() ));
-          }),
-          _buildBottomNavButton(context, 'Home', Icons.home, () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) =>  HomePage() ));
-          }),
-          _buildBottomNavButton(context, 'Search', Icons.search, () {}),
-          _buildBottomNavButton(context, 'Notifications', Icons.notifications, () {}),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.lightGreen[50]!, // First color
+            Colors.blue[50]!,
+            Colors.indigo[50]!,
+            Colors.red[50]!, // Second color
+          ],
+          begin: Alignment.topLeft, // Gradient starts from top-left
+          end: Alignment.bottomRight, // Gradient ends at bottom-right
+        ),
+      ),
+      child: BottomAppBar(
+        elevation: 0, // Set to 0 to blend with gradient background
+        color: Colors.transparent, // Make the BottomAppBar background transparent
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildBottomNavButton(context, 'Location', Icons.location_on_sharp, () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const LocationView()));
+            }),
+            _buildBottomNavButton(context, 'Login', Icons.login, () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+            }),
+            _buildBottomNavButton(context, 'Home', Icons.home, () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+            }),
+            _buildBottomNavButton(context, 'Search', Icons.search, () {}),
+            _buildBottomNavButton(context, 'Notifications', Icons.notifications, () {}),
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildBottomNavButton(
       BuildContext context, String label, IconData icon, VoidCallback onPressed) {
