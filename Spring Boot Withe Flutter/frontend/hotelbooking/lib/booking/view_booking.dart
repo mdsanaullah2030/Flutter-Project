@@ -146,12 +146,7 @@ class _AllBookingViewPageState extends State<ViewBooking> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.picture_as_pdf),
-                                      onPressed: () {
-                                        _viewBookingPdf(booking); // Add your PDF viewing logic
-                                      },
-                                    ),
+                                   
                                     IconButton(
                                       icon: const Icon(Icons.edit),
                                       onPressed: () {
